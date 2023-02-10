@@ -1,4 +1,4 @@
-package com.haedal;
+package com.haedal.entity;
 
 import lombok.Getter;
 import lombok.Setter;
