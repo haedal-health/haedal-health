@@ -7,26 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-
 
 @Entity
 @Getter
 @Setter
-public class Pass {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long passId;
+    private Long bookingId;
 
-    private String name;
+    private LocalDateTime startTime;
 
-    private Integer count;
-
-    private LocalDateTime startedDay;
-
-    private LocalDateTime endedDay;
-
-    private Integer price;
-    
+    private LocalDateTime endedTime;
 }
