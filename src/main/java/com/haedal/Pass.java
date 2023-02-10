@@ -17,15 +17,15 @@ import java.time.LocalDateTime;
 public class Pass {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long pass_id;
+    private Long passId;
 
     private String name;
 
     private Integer count;
 
-    private LocalDateTime started_At;
+    private LocalDateTime startedDay;
 
-    private LocalDateTime ended_At;
+    private LocalDateTime endedDay;
 
     private Integer price;
     
