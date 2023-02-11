@@ -25,7 +25,7 @@ public class PassTest {
     @DisplayName("Pass 생성 테스트")
     public void createPassEntityThanReturnsavedPassEntity(){
         Pass pass = new Pass();
-        pass.setPassId(1L);
+        //pass.setPassId(1L);
         pass.setName("해달헬스장 1일 이용권");
         pass.setPrice(9000);
         pass.setCount(1);
@@ -36,4 +36,15 @@ public class PassTest {
         assertEquals(savedPass.getPassId(), 1L);
     }
 
+    @Test
+    @DisplayName("Pass 조회 테스트")
+    public void detail(){}
+
+    @Test
+    @DisplayName("Pass 수정 테스트")
+    public void update(){}
+
+    @Test
+    @DisplayName("Pass 삭제 테스트")
+    public void delete(){}
 }
