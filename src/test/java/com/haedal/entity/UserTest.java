@@ -23,11 +23,23 @@ public class UserTest {
     //유저를 생성한 후 Jpa에서 save() 메소드가 반환하는 객체를 savedUser에 담는다.
     public void createUserEntityThanReturnsavedUserEntity() {
         User user = new User();
-        user.setUserId(1L);
+        // user.setUserId(1L);
         user.setName("홍길동");
         user.setPhone("01012345678");
         User savedUser = userRepository.save(user);
 
         assertEquals(savedUser.getUserId(),1L);
     }
+
+    @Test
+    @DisplayName("User 조회 테스트")
+    public void detail(){}
+
+    @Test
+    @DisplayName("User 수정 테스트")
+    public void update(){}
+
+    @Test
+    @DisplayName("User 삭제 테스트")
+    public void delete(){}
 }
