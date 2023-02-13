@@ -33,11 +33,49 @@ public class UserTest {
 
     @Test
     @DisplayName("User 조회 테스트")
-    public void detail(){}
+    public void findUserEntityByName(){
+
+        User user = new User();
+        user.setName("홍길동");
+        user.setPhone("010123456578");
+
+        User savedUser = userRepository.findByName("홍길동");
+
+
+
+    }
+
+    @Test
+    @DisplayName("User 조회 테스트")
+    public void findUserEntityById(){
+
+        User user = new User();
+        user.setName("홍길동");
+        user.setPhone("010123456578");
+        User savedUser = userRepository.save(user);
+
+        User findedUser = userRepository.findById(savedUser.getUserId()).orElse(null);
+
+        assertSame(findedUser,user);
+    }
 
     @Test
     @DisplayName("User 수정 테스트")
-    public void update(){}
+    public void changedUserEntityc(){
+        User user = new User();
+        user.setName("홍길동");
+        user.setPhone("010123456578");
+        User savedUser = userRepository.save(user);
+
+        savedUser.setName("윤재용");
+        savedUser.setPhone("01099105948");
+
+        User updatedUser = userRepository.save(savedUser);
+
+        assertEquals(updatedUser.getName(),savedUser.getName());
+        assertEquals(updatedUser.getUserId(),savedUser.getUserId());
+        assertEquals(updatedUser.getPhone(),savedUser.getPhone());
+    }
 
     @Test
     @DisplayName("User 삭제 테스트")
