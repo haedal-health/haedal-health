@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PassRepository  extends JpaRepository<Pass, Long> {
 
+    public Pass findByName(String name);
 }
