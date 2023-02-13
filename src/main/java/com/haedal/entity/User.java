@@ -13,7 +13,6 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @Setter
-
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자를 protected된 상태로 생성한다.
 public class User {
     @Id
