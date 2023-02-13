@@ -50,7 +50,7 @@ public class PassTest {
         pass.setEndedDay(LocalDateTime.now());
 
         Pass savedPass = passRepository.save(pass);
-        Pass findPass = passRepository.findByName(savedPass.getName());
+        Pass findPass = passRepository.findByName(savedPass.getName()).orElse(null);
         assertEquals(findPass.getPassId(), savedPass.getPassId());
     }
     @Test
@@ -66,6 +66,9 @@ public class PassTest {
         Pass savedPass = passRepository.save(pass);
         Pass findPass = passRepository.findById(1L).orElse(null);
         assertEquals(findPass.getName(), savedPass.getName());
+        //assertEquals(findPass, pass);
+        //객체끼리 비교하면 안되는 걸까?
+
     }
     @Test
     @DisplayName("모든 Pass 조회 테스트")
@@ -93,9 +96,46 @@ public class PassTest {
 
     @Test
     @DisplayName("Pass 수정 테스트")
-    public void update(){}
+    public void update(){
+        Pass pass = new Pass();
+        pass.setName("해달헬스장 1일 이용권");
+        pass.setPrice(9000);
+        pass.setCount(1);
+        pass.setStartedDay(LocalDateTime.now().minusDays(1));
+        pass.setEndedDay(LocalDateTime.now());
+        Pass savedPass = passRepository.save(pass);
+
+        Optional<Pass> findPass = passRepository.findById(1L);
+        findPass.ifPresent( pass2 -> {
+            pass2.setName("해달헬스장 3일 이용권");
+            pass2.setPrice(3);
+            Pass updatedPass = passRepository.save(pass2);
+            System.out.println("업데이트 성공 " + updatedPass.getName());
+            assertEquals(updatedPass.getName(), pass2.getName());
+            assertEquals(updatedPass.getPassId(), pass2.getPassId());
+        } );
+
+         //이미 ID가 있기 떄문에 해당 entity가 수정된다.
+    }
 
     @Test
     @DisplayName("Pass 삭제 테스트")
-    public void delete(){}
+    public void delete(){
+        Pass pass = new Pass();
+        pass.setName("해달헬스장 1일 이용권");
+        pass.setPrice(9000);
+        pass.setCount(1);
+        pass.setStartedDay(LocalDateTime.now().minusDays(1));
+        pass.setEndedDay(LocalDateTime.now());
+        Pass savedPass = passRepository.save(pass);
+
+        Optional<Pass> findPass = passRepository.findById(1L);
+        assertTrue(findPass.isPresent());    // true
+
+        findPass.ifPresent( pass2 -> {
+            passRepository.delete(pass2);
+        } );
+        Optional<Pass> deletePass = passRepository.findById(1L);
+        assertFalse(deletePass.isPresent());
+    }
 }
