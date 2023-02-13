@@ -3,10 +3,7 @@ package com.haedal.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -20,4 +17,13 @@ public class Booking {
     private LocalDateTime startTime;
 
     private LocalDateTime endedTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "passId", insertable = false, updatable = false)
+    private Pass pass;
+
 }
