@@ -29,9 +29,10 @@ public class Pass {
     private LocalDateTime endedDay;
 
     private Integer price;
-
-    @OneToMany(mappedBy="pass")
-    List<Booking> bookings;
-    //이용권을
+//
+//    @OneToMany(mappedBy="pass")
+//    private List<Booking> bookings;
+//    //양방향 연결이며, 오로지
+//    // pass에서만 조회, 저장, 수정, 삭제가 가능함.
     
 }
