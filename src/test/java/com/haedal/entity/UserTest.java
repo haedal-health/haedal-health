@@ -78,6 +78,6 @@ public class UserTest {
     }
 
     @Test
-    @DisplayName("User 삭제 테스트")
+    @DisplayName("User 삭제 테스트 - test")
     public void delete(){}
 }
