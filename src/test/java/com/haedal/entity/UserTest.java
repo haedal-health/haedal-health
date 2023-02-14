@@ -41,8 +41,6 @@ public class UserTest {
 
         User savedUser = userRepository.findByName("홍길동");
 
-
-
     }
 
     @Test
