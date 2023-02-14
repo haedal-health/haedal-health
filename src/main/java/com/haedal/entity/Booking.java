@@ -18,12 +18,12 @@ public class Booking {
 
     private LocalDateTime endedTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId", insertable = false, updatable = false)
-    private User user;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "userId", insertable = false, updatable = false)
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "passId", insertable = false, updatable = false)
-    private Pass pass;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "passId", insertable = false, updatable = false)
+    private Long passId;
 
 }
