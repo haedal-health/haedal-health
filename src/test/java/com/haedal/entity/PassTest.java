@@ -36,7 +36,7 @@ public class PassTest {
 
         Pass savedPass = passRepository.save(pass);
         passRepository.findByName("해달헬스장 1일 이용권");
-        assertEquals(savedPass.getPassId(), 1L);
+        assertEquals(savedPass.getName(), pass.getName());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PassTest {
         pass.setEndedDay(LocalDateTime.now());
 
         Pass savedPass = passRepository.save(pass);
-        Pass findPass = passRepository.findById(1L).orElse(null);
+        Pass findPass = passRepository.findById(savedPass.getPassId()).orElse(null);
         assertEquals(findPass.getName(), savedPass.getName());
         //assertEquals(findPass, pass);
         //객체끼리 비교하면 안되는 걸까?
