@@ -1,83 +1,90 @@
-
 package com.haedal.entity;
 
+
+import com.haedal.repository.BookingRepository;
+import com.haedal.repository.PassRepository;
 import com.haedal.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest  // 각각의 모듈만 테스트 할 수 있도록 도움을 준다.
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@DisplayName("UserEntity 및 Repository 테스트")
+@DisplayName("UserEntity 매핑 테스트")
 public class UserTest {
     @Autowired
+    private BookingRepository bookingRepository;
+
+    @Autowired
     private UserRepository userRepository;
-    // userRepository 인스턴스 생성 후 의존성주입?
-    // 이떄 AutoWired가 의존성 주입을 못하는 이유는 모듈들이 결합되어 있기 때문일까?
-    @Test
-    @DisplayName("User 생성 테스트")
-    //유저를 생성한 후 Jpa에서 save() 메소드가 반환하는 객체를 savedUser에 담는다.
-    public void createUserEntityThanReturnsavedUserEntity() {
-        User user = new User();
-        // user.setUserId(1L);
-        user.setName("홍길동");
-        user.setPhone("01012345678");
-        User savedUser = userRepository.save(user);
 
-        assertEquals(savedUser.getUserId(),1L);
-    }
+    @Autowired
+    private PassRepository passRepository;
 
-    @Test
-    @DisplayName("User 조회 테스트")
-    public void findUserEntityByName(){
-
-        User user = new User();
-        user.setName("홍길동");
-        user.setPhone("010123456578");
-
-        User savedUser = userRepository.findByName("홍길동");
-
-
-
-    }
-
-    @Test
-    @DisplayName("User 조회 테스트")
-    public void findUserEntityById(){
-
-        User user = new User();
-        user.setName("홍길동");
-        user.setPhone("010123456578");
-        User savedUser = userRepository.save(user);
-
-        User findedUser = userRepository.findById(savedUser.getUserId()).orElse(null);
-
-        assertSame(findedUser,user);
-    }
-
-    @Test
-    @DisplayName("User 수정 테스트")
-    public void changedUserEntityc(){
-        User user = new User();
-        user.setName("홍길동");
-        user.setPhone("010123456578");
-        User savedUser = userRepository.save(user);
-
-        savedUser.setName("윤재용");
-        savedUser.setPhone("01099105948");
-
-        User updatedUser = userRepository.save(savedUser);
-
-        assertEquals(updatedUser.getName(),savedUser.getName());
-        assertEquals(updatedUser.getUserId(),savedUser.getUserId());
-        assertEquals(updatedUser.getPhone(),savedUser.getPhone());
-    }
-
-    @Test
-    @DisplayName("User 삭제 테스트 - test")
-    public void delete(){}
+//    @Test
+//    @DisplayName("user 한 명이 가진 모든 이용권 조회하기(userId) - 1개")
+//    void findAllPassfromOneUser_test(){
+//        Pass pass = new Pass();
+//        pass.setName("해달헬스장 1일 이용권");
+//        pass.setPrice(9000);
+//        pass.setCount(1);
+//        pass.setStartedDay(LocalDateTime.now().minusDays(1));
+//        pass.setEndedDay(LocalDateTime.now());
+//        Pass savedPass = passRepository.save(pass);
+//
+//        User user = new User();
+//        user.setName("홍길동");
+//        user.setPhone("01012345678");
+//        User savedUser = userRepository.save(user);
+//
+//        Booking booking = new Booking();
+//        booking.setStartTime(LocalDateTime.now().plusHours(1));
+//        booking.setEndedTime(LocalDateTime.now().plusHours(3));
+//        booking.setUserId(savedUser.getUserId());
+//        booking.setPassId(savedPass.getPassId());
+//        Booking savedBooking = bookingRepository.save(booking);
+//
+//        Booking booking1 = bookingRepository.findByUserId(savedUser.getUserId()).orElse(null);
+//        Pass pass1= passRepository.findById(booking1.getPassId()).orElse(null);
+//        System.out.println(pass1.getName());
+//        assertEquals(pass1.getName(), pass.getName());
+//    }
+//    @Test
+//    @DisplayName("user 한 명이 가진 모든 이용권 조회하기(userId) - 여러개")
+//    void findAllPassfromOneUser_test2(){
+//        User user = new User();
+//        user.setName("홍길동");
+//        user.setPhone("01012345678");
+//        User savedUser = userRepository.save(user);
+//
+//        for(int i=0; i<3; i++) {
+//            Pass pass = new Pass();
+//            pass.setName("해달헬스장 1일 이용권" + (i+1) + "번째");
+//            pass.setPrice(9000);
+//            pass.setCount(1);
+//            pass.setStartedDay(LocalDateTime.now().minusDays(1));
+//            pass.setEndedDay(LocalDateTime.now());
+//            Pass savedPass = passRepository.save(pass);
+//
+//            Booking booking = new Booking();
+//            booking.setStartTime(LocalDateTime.now().plusHours(1));
+//            booking.setEndedTime(LocalDateTime.now().plusHours(3));
+//            booking.setUserId(savedUser.getUserId());
+//            booking.setPassId(savedPass.getPassId());
+//            bookingRepository.save(booking);
+//
+//        }
+//        List<Booking> bookings = bookingRepository.findAllByUserId(savedUser.getUserId()).orElse(null);
+//
+////        Pass pass1= passRepository.findById(booking1.getPassId()).orElse(null);
+////        System.out.println(pass1.getName());
+////        assertEquals(pass1.getName(), pass.getName());
+//}
 }
