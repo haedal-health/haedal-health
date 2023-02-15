@@ -64,6 +64,7 @@ public class UserTest {
         List<Booking> bookings = bookingRepository.findAll();
         assertEquals(bookings.size(), 4);
 
+
         List<Long> passIds = bookingRepository.findAllPassIdByUserId(savedUser.getUserId());
         if(passIds!=null){
             for(Long pass : passIds){
@@ -78,7 +79,6 @@ public class UserTest {
             }
             assertEquals(passes.size(), 3);
         }
-
 
 }
 }
