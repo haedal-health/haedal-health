@@ -57,21 +57,23 @@ public class BookingTest {
     }
 
     @Test
-    @DisplayName("user 한 명이 가진 모든 이용권 조회하기(userId) - 여러개")
-    void findAllPassfromOneUser_test2(){
+    @DisplayName("passId, userId로 모든 이용권 조회하기")
+    void findBookingByPassIdAndUserId_test(){
         User user = new User();
         user.setName("홍길동");
         user.setPhone("01012345678");
         User savedUser = userRepository.save(user);
 
-        for(int i=0; i<3; i++) {
-            Pass pass = new Pass();
-            pass.setName("해달헬스장 1일 이용권" + (i+1) + "번째");
-            pass.setPrice(9000);
-            pass.setCount(1);
-            pass.setStartedDay(LocalDateTime.now().minusDays(1));
-            pass.setEndedDay(LocalDateTime.now());
-            Pass savedPass = passRepository.save(pass);
+        Pass pass = new Pass();
+        pass.setName("해달헬스장 1일 이용권");
+        pass.setPrice(9000);
+        pass.setCount(2);
+        pass.setStartedDay(LocalDateTime.now().minusDays(1));
+        pass.setEndedDay(LocalDateTime.now());
+        Pass savedPass = passRepository.save(pass);
+
+
+        for(int i=0; i<2; i++) {
 
             Booking booking = new Booking();
             booking.setStartTime(LocalDateTime.now().plusHours(1));
@@ -80,16 +82,22 @@ public class BookingTest {
             booking.setPassId(savedPass.getPassId());
             bookingRepository.save(booking);
 
-        }
-        List<Booking> bookings = bookingRepository.findAllByUserId(savedUser.getUserId()).orElse(null);
+            Booking booking2 = new Booking();
+            booking2.setStartTime(LocalDateTime.now().plusHours(2));
+            booking2.setEndedTime(LocalDateTime.now().plusHours(4));
+            booking2.setUserId(savedUser.getUserId());
+            booking2.setPassId(savedPass.getPassId());
+            bookingRepository.save(booking2);
 
-        for(Booking b : bookings){
-            Pass pass1 = passRepository.findById(b.getPassId()).orElse(null);
-            if(pass1 != null){
-                System.out.println(pass1.getName());
-            }
         }
-        assertEquals(bookings.size(), 3);
+        List<Booking> bookings = bookingRepository.findAllByPassIdAndUserId(pass.getPassId(), user.getUserId());
+        if(bookings!=null){
+            for(Booking booking: bookings){
+                System.out.println(booking.getPassId());
+            }
+            assertEquals(bookings.size(),4);
+        }
+
     }
 
 }
