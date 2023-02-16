@@ -20,7 +20,7 @@ public class UserService {
     /*
          회원가입
          */
-    public Long join(User user){
+    public Long Sign(User user){
         checkSameNameUser(user); // 같은 이름의 중복 유저 검증
         userRepository.save(user);
         return user.getUserId();
