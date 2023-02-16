@@ -25,11 +25,14 @@ public class UserController {
 
     //사용자 생성페이지 요청
     @GetMapping("")
-    public User createForm(){
+    public String createForm(){
+        /*
         User user = new User();
         user.setName("윤재용");
         user.setPhone("01099105948");
         return user;
+         */
+        return "1";
     }
 
     //사용자 생성 요청
@@ -39,14 +42,14 @@ public class UserController {
         user.setName(form.getName());
         user.setPhone(form.getPhone());
 
-        userService.join(user);
+        userService.sign(user);
         return "처음페이지로";
     }
 
 
 
     //사용자 전체 조회 페이지 요청
-    @GetMapping("1")
+    @GetMapping("")
     public String list(Model model){
         List<User> users = userService.findUsers();
         model.addAttribute("users",users);
