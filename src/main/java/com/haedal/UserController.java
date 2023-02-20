@@ -1,12 +1,10 @@
 package com.haedal;
 
 
-import com.haedal.UserForm;
 import com.haedal.entity.User;
 import com.haedal.repository.UserRepository;
 import com.haedal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,10 +40,7 @@ public class UserController {
 
     //사용자 생성 요청
     @PostMapping("")
-    public String create(UserForm form){
-        User user = new User();
-        user.setName(form.getName());
-        user.setPhone(form.getPhone());
+    public String create(User user){
         userRepository.save(user);
         return "처음페이지로";
     }
@@ -56,7 +51,7 @@ public class UserController {
     @GetMapping("all")
     public List list(Model model){
         List<User> users = userService.findUsers();
-        ;
+
         return users;
     }
 

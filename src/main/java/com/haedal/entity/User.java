@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PUBLIC) // 기본 생성자를 protected된 상태로 생성한다.
+//@NoArgsConstructor(access = AccessLevel.PROTECTED) // 기본 생성자를 protected된 상태로 생성한다.
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
