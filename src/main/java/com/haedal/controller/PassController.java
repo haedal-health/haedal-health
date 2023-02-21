@@ -17,7 +17,7 @@ public class PassController {
     PassRepository passRepository;
 
     @PostMapping("")
-    public Pass postPass(@RequestBody Pass pass){
+    public Pass postPass(@Req햐uestBody Pass pass){
         Pass newpass = passRepository.save(pass);
         //passService.save(pass);
         return newpass;
