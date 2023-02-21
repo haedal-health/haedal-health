@@ -13,6 +13,8 @@ public class PassService {
     private final PassRepository passRepository;
 
     public Pass create(Pass pass) {
-        return passRepository.save(pass);
+
+        Pass saved = passRepository.save(pass);
+        return saved;
     }
 }
