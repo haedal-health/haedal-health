@@ -14,6 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
+
         this.userRepository = userRepository;
     }
 
@@ -43,5 +44,27 @@ public class UserService {
 
     public Optional<User> findOne(Long memberId) {
         return userRepository.findById(memberId);
+    }
+
+    public Optional<User> modifyOne(Long memberId,User user) {
+        Optional<User> originUser = userRepository.findById(memberId);
+        originUser.ifPresent(
+                change-> {
+            change.setName(user.getName());
+            change.setPhone(user.getPhone());
+                }
+        );
+        return originUser;
+    }
+    public String deleteOne(Long id) {
+        Optional<User> user = userRepository.findById(id);
+        String userName = user.get().getName();
+        if(user.isPresent())
+        {
+            userRepository.delete(user.get());
+        }
+
+        String answer = userName+"이 삭제되었습니다.";
+        return answer;
     }
 }
