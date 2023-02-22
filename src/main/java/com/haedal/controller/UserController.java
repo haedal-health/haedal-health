@@ -1,7 +1,8 @@
-package com.haedal;
+package com.haedal.controller;
 
 
 import com.haedal.entity.User;
+import com.haedal.entity.UserDto;
 import com.haedal.repository.UserRepository;
 import com.haedal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,8 @@ public class UserController {
 
     //사용자 생성 요청
     @PostMapping("user")
-    public String create(User user){
+    public String create(UserDto userdto){
+        User user = UserDto.toEntity(userdto);
         userService.sign(user);
         return "처음페이지로";
     }
@@ -38,7 +40,6 @@ public class UserController {
     //사용자 전체 조회 페이지 요청
     @GetMapping("user")
     public List list(){
-
 
         List<User> users = userService.findUsers();
 
