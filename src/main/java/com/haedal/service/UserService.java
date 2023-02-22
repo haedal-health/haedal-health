@@ -58,9 +58,10 @@ public class UserService {
     }
     public String deleteOne(Long id) {
         Optional<User> user = userRepository.findById(id);
-        String userName = user.get().getName();
+        String userName = null;
         if(user.isPresent())
         {
+            userName = user.get().getName();
             userRepository.delete(user.get());
         }
 

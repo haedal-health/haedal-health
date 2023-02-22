@@ -1,4 +1,4 @@
-/*
+
 package com.haedal.controller;
 
 
@@ -15,6 +15,8 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -36,8 +38,12 @@ public class UserControllerTest {
 
         String json = "[{\"userId\":1,\"name\":\"윤재용\",\"phone\":\"01099105948\"}]";
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/user")
-                .andExpect(MockMvcResultMatchers.content().string(json))
+        mockMvc.perform(
+                MockMvcRequestBuilders.get("/user")
+                        .content(json)
+                        .contentType(MediaType.APPLICATION_JSON))
+                //.andExpect(MockMvcResultMatchers.content().string(json))
+                .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 
@@ -59,4 +65,3 @@ public class UserControllerTest {
     }
 
 }
-*/
