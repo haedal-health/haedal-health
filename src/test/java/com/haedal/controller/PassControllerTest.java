@@ -57,47 +57,6 @@ class PassControllerTest {
     }
 
     @Test
-    @DisplayName("Pass 생성 테스트")
-    public void saveTest() throws Exception
-    {
-        // given pass 만들고
-        Pass pass = new Pass();
-        pass.setName("해달헬스장 1일 이용권");
-        pass.setPrice(9000);
-        pass.setCount(1);
-        pass.setStartedDay(LocalDateTime.now().minusDays(1));
-        pass.setEndedDay(LocalDateTime.now());
-
-
-        // when & then
-        //post 호출 시 성공할 것이다.
-        mockMvc.perform(post("/pass")
-                        .content(objectMapper.writeValueAsString(pass))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-    @Test
-    @DisplayName("Pass 임시 테스트")
-    public void helloTest() throws Exception {
-        Pass pass = new Pass();
-        pass.setName("해달헬스장 1일 이용권");
-        pass.setPrice(9000);
-        pass.setCount(1);
-        pass.setStartedDay(LocalDateTime.now().minusDays(1));
-        pass.setEndedDay(LocalDateTime.now());
-
-
-        // when & then
-        mockMvc.perform(post("/pass/hello")
-                        .content(objectMapper.writeValueAsString(pass))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-
-    @Test
     @DisplayName("pass 생성 테스트")
     public void createTest() throws Exception {
         // given
