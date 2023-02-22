@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController // 추후 변경 예정
 public class UserController {
@@ -28,35 +29,46 @@ public class UserController {
     //사용자 생성페이지 요청
 
     //사용자 생성 요청
-    @PostMapping("user")
-    public String create(UserDto userdto){
+    @PostMapping("/user")
+    public UserDto create(UserDto userdto){
         User user = UserDto.toEntity(userdto);
-        userService.sign(user);
-        return "처음페이지로";
+        User pullUser  = userService.sign(user);
+
+        return UserDto.from(pullUser);
     }
 
 
 
     //사용자 전체 조회 페이지 요청
-    @GetMapping("user")
+    @GetMapping("/user")
     public List list(){
 
         List<User> users = userService.findUsers();
+        List<UserDto> userDtos = users.stream()
+                .map(u -> UserDto.from(u))
+                .collect(Collectors.toList());
 
-        return users;
+
+        return userDtos;
     }
 
-    @GetMapping("user/{id}")
-    public Optional<User> findUser(@PathVariable(value = "id")long id){
-        return userService.findOne(id);
+    @GetMapping("/user/{id}")
+    public UserDto findUser(@PathVariable(value = "id")long id){
+
+        User user = userService.findOne(id);
+
+        return UserDto.from(user);
+
     }
 
-    @PatchMapping("user/{id}")
-    public Optional<User> modify(@PathVariable(value = "id")long id, User user){
-        return userService.modifyOne(id,user);
+    @PatchMapping("/user/{id}")
+    public UserDto modify(@PathVariable(value = "id")long id, User user){
+        User changedUser = userService.modifyOne(id,user);
+
+        return UserDto.from(changedUser);
     }
 
-    @DeleteMapping("user/{id}")
+    @DeleteMapping("/user/{id}")
     public String delete(@PathVariable(value = "id")long id)
     {
         return userService.deleteOne(id);
