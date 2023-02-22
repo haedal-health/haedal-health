@@ -2,24 +2,22 @@ package com.haedal.controller;
 
 
 import com.haedal.entity.Pass;
-import com.haedal.repository.PassRepository;
 import com.haedal.service.PassService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/pass")
+@RequiredArgsConstructor
 public class PassController {
 
-    @Autowired
-    PassRepository passRepository;
+    private final PassService passService;
+
+    //public PassController(){}
 
     @PostMapping("")
-    public Pass postPass(@Req햐uestBody Pass pass){
-        Pass newpass = passRepository.save(pass);
-        //passService.save(pass);
-        return newpass;
+    public Pass createPass(@RequestBody Pass pass){
+        return passService.create(pass);
     }
 }
