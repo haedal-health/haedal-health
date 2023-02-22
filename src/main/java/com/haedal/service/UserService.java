@@ -21,10 +21,10 @@ public class UserService {
     /*
          회원가입
          */
-    public Long sign(User user){
+    public User sign(User user){
         checkSameNameUser(user); // 같은 이름의 중복 유저 검증
         userRepository.save(user);
-        return user.getUserId();
+        return user;
     }
 
     private void checkSameNameUser(User user) {
@@ -42,30 +42,25 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public Optional<User> findOne(Long memberId) {
-        return userRepository.findById(memberId);
+    public User findOne(Long memberId) {
+
+        return userRepository.findById(memberId).orElse(null);
     }
 
-    public Optional<User> modifyOne(Long memberId,User user) {
-        Optional<User> originUser = userRepository.findById(memberId);
-        originUser.ifPresent(
-                change-> {
-            change.setName(user.getName());
-            change.setPhone(user.getPhone());
-                }
-        );
+    public User modifyOne(Long memberId,User user) {
+        User originUser = userRepository.findById(memberId).orElse(null);
+
+        originUser.setName(user.getName());
+        originUser.setPhone(user.getPhone());
         return originUser;
     }
     public String deleteOne(Long id) {
-        Optional<User> user = userRepository.findById(id);
-        String userName = null;
-        if(user.isPresent())
-        {
-            userName = user.get().getName();
-            userRepository.delete(user.get());
-        }
+       User user = userRepository.findById(id).orElse(null);
+        String userName = user.getName();
+        userRepository.delete(user);
+
 
         String answer = userName+"이 삭제되었습니다.";
         return answer;
-    }
+    }f
 }
