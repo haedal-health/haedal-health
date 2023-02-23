@@ -12,6 +12,7 @@ import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Builder
 @Data
 @Entity
 @Getter
@@ -45,5 +46,5 @@ public class Pass {
 //    private List<Booking> bookings;
 //    //양방향 연결이며, 오로지
 //    // pass에서만 조회, 저장, 수정, 삭제가 가능함.
-    
+
 }
