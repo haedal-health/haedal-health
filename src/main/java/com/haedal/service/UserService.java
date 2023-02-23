@@ -23,8 +23,8 @@ public class UserService {
          */
     public User sign(User user){
         checkSameNameUser(user); // 같은 이름의 중복 유저 검증
-        userRepository.save(user);
-        return user;
+        User savedUser = userRepository.save(user);
+        return savedUser;
     }
 
     private void checkSameNameUser(User user) {
@@ -62,5 +62,5 @@ public class UserService {
 
         String answer = userName+"이 삭제되었습니다.";
         return answer;
-    }f
+    }
 }
