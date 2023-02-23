@@ -24,6 +24,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.net.URI;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -85,6 +87,19 @@ class PassControllerTest {
 
         then(passService).should().getPass(passId);
     }
+    @Test
+    @DisplayName("GET - 전체 조회")
+    public void giveNothingandReturnPassAll() throws Exception {
+        //given
+        given(passService.getAll()).willReturn(createPassDtoList());
+
+        //when&then
+        mockMvc.perform(get("/pass"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        then(passService).should().getAll();
+    }
 
     private Pass createPass() {
         Pass pass = new Pass();
@@ -106,5 +121,19 @@ class PassControllerTest {
                 LocalDateTime.now().minusDays(1),
                 LocalDateTime.now()
         );
+    }
+    private List<PassDto> createPassDtoList() {
+        List<PassDto> passes = new ArrayList<>();
+        for(int i=0; i<10; i++) {
+            passes.add( PassDto.of(
+                    Integer.toUnsignedLong(i),
+                    "해달헬스장 1일 이용권",
+                    9000,
+                    1,
+                    LocalDateTime.now().minusDays(1),
+                    LocalDateTime.now())
+            );
+        }
+        return passes;
     }
 }
