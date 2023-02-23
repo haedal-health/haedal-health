@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/pass")
 @RequiredArgsConstructor
@@ -26,6 +28,10 @@ public class PassController {
     public PassDto detailPass(@PathVariable Long passId){
         PassDto pass = PassDto.from(passService.getPass(passId));
         return pass;
+    }
+    @GetMapping("")
+    public List<PassDto> listPass(){
+        return passService.getAll();
     }
 
 }

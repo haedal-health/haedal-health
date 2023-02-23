@@ -1,6 +1,7 @@
 package com.haedal.service;
 
 import com.haedal.entity.Pass;
+import com.haedal.entity.PassDto;
 import com.haedal.repository.PassRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,5 +42,15 @@ public class PassService {
     public Pass getPass(Long passId) {
         return passRepository.findById(passId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
+    }
+
+    public List<PassDto> getAll() {
+        //TODO : pageable 추가 -> map(PassDto::from)
+        List<Pass> passList = passRepository.findAll();
+        List<PassDto> passDtoList = new ArrayList<>();
+        passList.stream()
+                .map(PassDto::from)
+                .forEach(passDtoList::add);
+        return passDtoList;
     }
 }

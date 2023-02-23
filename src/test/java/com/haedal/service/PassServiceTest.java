@@ -12,9 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -75,4 +73,31 @@ class PassServiceTest {
         then(passRepository).should().findById(passId);
     }
 
+    @DisplayName("pass 전체 조회가 잘 되는지 서비스 테스트")
+    @Test
+    void returnAllPassList(){
+        //given
+        given(passRepository.findAll()).willReturn(createPassList());
+        //when
+        List<PassDto> passDtos = passService.getAll();
+        //then
+        assertThat(passDtos)
+                .hasSize(10)
+                .hasOnlyElementsOfType(PassDto.class);
+        then(passRepository).should().findAll();
+    }
+    private List<Pass> createPassList() {
+        List<Pass> passes = new ArrayList<>();
+        for(int i=0; i<10; i++) {
+            Pass pass = new Pass();
+            pass.setPassId(Integer.toUnsignedLong(i));
+            pass.setName("해달헬스장 1일 이용권");
+            pass.setPrice(9000);
+            pass.setCount(1);
+            pass.setStartedDay(LocalDateTime.now().minusDays(1));
+            pass.setEndedDay(LocalDateTime.now());
+            passes.add(pass);
+        }
+        return passes;
+    }
 }
