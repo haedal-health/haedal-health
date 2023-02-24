@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(PassController.class)        // WebMvc Test Annotation ( UserApiController 를 테스트)
-@AutoConfigureMockMvc                       // MockMvc 자동 설정 Annotation
+@AutoConfigureMockMvc                    // MockMvc 자동 설정 Annotation
 @Import(ObjectMapperConfig.class)
 class PassControllerTest {
     private final MockMvc mockMvc;

@@ -31,7 +31,7 @@ public class UserServiceTest {
     @Test
     void SignTest(){
         //given
-        User request = newUser();
+        User request = newUser(1L);
         Mockito.when(userRepository.save(request))
                 .thenReturn(request);
 
@@ -62,12 +62,13 @@ public class UserServiceTest {
                 .isEqualTo(users);
         Mockito.verify(userRepository).findAll();
     }
-    @DisplayName("findall 서비스 테스트")
+
+    @DisplayName("finone 서비스 테스트")
     @Test
     void findOneTest(){
 
         //given
-        User user = newUser();
+        User user = newUser(1L);
         long id = 1L;
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
@@ -80,18 +81,48 @@ public class UserServiceTest {
         Mockito.verify(userRepository).findById(1L);
     }
 
+    @Test
+    @DisplayName("modify 테스트")
+    void modifyTest(){
+        //given
+        User user = newUser(1L);
+        User changedUser = newUser(2L);
+        changedUser.setName("김철수");
+
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+
+        //when
+        User result = userService.modifyOne(1L,user);
+
+        //then
+        assertThat(result)
+                .isEqualTo(user);
+        Mockito.verify(userRepository).findById(1L);
 
 
 
+    }
+
+    @Test
+    @DisplayName("삭제 테스트")
+    void deleteTest(){
+        //given
+        User user = newUser(1L);
+        Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+        //when
+        String result = userService.deleteOne(1L);
+
+        //then
+        System.out.println(result);
+
+    }
 
 
 
-
-
-    private User newUser(){
+    private User newUser(Long id){
 
         User user = new User();
-        user.setUserId(1L);
+        user.setUserId(id);
         user.setName("홍길동");
         user.setPhone("01012345678");
         return user;
@@ -99,10 +130,9 @@ public class UserServiceTest {
 
     private List<User> newUsers(){
         List<User> users = new ArrayList<>();
-
         for(int i = 0; i< 10; i++)
         {
-            users.add(newUser());
+            users.add(newUser(i+1L));
         }
         return users;
     }
