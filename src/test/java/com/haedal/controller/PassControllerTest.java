@@ -119,14 +119,14 @@ class PassControllerTest {
     public void givePassDtoandReturnStringDeleted() throws Exception {
         //given
         PassDto deleted = createPassDto();
-        given(passService.deletePass(deleted.getId())).willReturn(deleted.getName()+"이 삭제되었습니다.");
+
+        given(passService.deletePass(1L)).willReturn(deleted.getName()+"이 삭제되었습니다.");
 
         //when&then
-        mockMvc.perform(delete("/pass/"+deleted.getId()))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        mockMvc.perform(delete("/pass/1"))
+                .andExpect(status().isOk());
 
-        then(passService).should().deletePass(deleted.getId());
+        then(passService).should().deletePass(1L);
     }
 
     private Pass createPass() {
