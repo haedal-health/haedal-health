@@ -100,7 +100,7 @@ class PassControllerTest {
         then(passService).should().getAll();
     }
     @Test
-    @DisplayName("Patch - 수정 조회")
+    @DisplayName("Patch - 수정")
     public void givePassDtoandReturnPassDtoUpdated() throws Exception {
         //given
         PassDto updated = createPassDto();
@@ -113,6 +113,22 @@ class PassControllerTest {
 
         then(passService).should().updatePass(1L, updated);
     }
+
+    @Test
+    @DisplayName("DELETE - 삭제 ")
+    public void givePassDtoandReturnStringDeleted() throws Exception {
+        //given
+        PassDto deleted = createPassDto();
+        given(passService.deletePass(deleted.getId())).willReturn(deleted.getName()+"이 삭제되었습니다.");
+
+        //when&then
+        mockMvc.perform(delete("/pass/"+deleted.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+
+        then(passService).should().deletePass(deleted.getId());
+    }
+
     private Pass createPass() {
         Pass pass = new Pass();
         pass.setPassId(1L);

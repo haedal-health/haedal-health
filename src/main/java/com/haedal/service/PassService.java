@@ -2,6 +2,7 @@ package com.haedal.service;
 
 import com.haedal.entity.Pass;
 import com.haedal.entity.PassDto;
+import com.haedal.entity.User;
 import com.haedal.repository.PassRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -54,10 +55,10 @@ public class PassService {
 
     @Transactional
     public Pass updatePass(Long passId, PassDto passDto) throws Exception {
-        Pass pass = passRepository.findById(passId).orElse(null);
-        if(pass==null){
-            throw new Exception("해당 Pass가 존재하지 않습니다.");
-        }
+        Pass pass = passRepository.findById(passId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
+
         pass.setName(passDto.getName());
         pass.setPrice(passDto.getPrice());
         pass.setCount(passDto.getCount());
@@ -65,5 +66,15 @@ public class PassService {
         pass.setEndedDay(passDto.getEndedDay());
 
         return pass;
+    }
+
+    public String deletePass(Long passId){
+        Pass pass = passRepository.findById(passId)
+                .orElseThrow(() ->
+                        new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
+
+        passRepository.delete(pass);
+        String answer = pass.getName()+"이 삭제되었습니다.";
+        return answer;
     }
 }

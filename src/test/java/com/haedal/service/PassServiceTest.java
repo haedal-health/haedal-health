@@ -111,7 +111,18 @@ class PassServiceTest {
         then(passRepository).should().findById(pass.getPassId());
     }
 
-
+    @DisplayName("pass 삭제 서비스 테스트")
+    @Test
+    void deletePassTest() throws Exception {
+        //given
+        Pass pass = createPass();
+        given(passRepository.findById(pass.getPassId())).willReturn(Optional.of(pass));
+        //when
+        String word = passService.deletePass(pass.getPassId());
+        //then
+        assertEquals(word, pass.getName()+"이 삭제되었습니다.");
+        then(passRepository).should().findById(pass.getPassId());
+    }
     private Pass createPass() {
         Pass pass = new Pass();
         pass.setPassId(1L);
