@@ -48,6 +48,7 @@ public class PassDto {
 
     public Pass toEntity() {
         return Pass.builder()
+                .passId(id)
                 .name(name)
                 .count(count)
                 .price(price)
