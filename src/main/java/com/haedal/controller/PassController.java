@@ -37,5 +37,8 @@ public class PassController {
     public PassDto modifyPass(@PathVariable Long passId, PassDto passDto) throws Exception {
         return PassDto.from(passService.updatePass(passId, passDto));
     }
-
+    @DeleteMapping("/{passId}")
+    public String deletePass(@PathVariable Long passId) throws Exception {
+        return passService.deletePass(passId);
+    }
 }
