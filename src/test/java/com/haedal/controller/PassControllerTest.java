@@ -107,9 +107,10 @@ class PassControllerTest {
         given(passService.updatePass(1L, updated)).willReturn(createPass());
 
         //when&then
-        mockMvc.perform(patch("/pass/1"))
-                .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+        mockMvc.perform(patch("/pass/1")
+                        .content(objectMapper.writeValueAsString(updated))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
         then(passService).should().updatePass(1L, updated);
     }
