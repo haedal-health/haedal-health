@@ -30,7 +30,7 @@ public class BookingController {
         return bookingService.getAllbyPassAndUser(passId, userId);
     }
     @PatchMapping("/{bookingId}")
-    public Booking modifyBooking(@PathVariable Long bookingId, Booking booking) {
+    public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody  Booking booking) {
         return bookingService.updateBooking(bookingId, booking);
     }
     @DeleteMapping("/{bookingId}")
