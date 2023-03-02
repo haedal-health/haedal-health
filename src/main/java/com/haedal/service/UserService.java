@@ -59,7 +59,6 @@ public class UserService {
         String userName = user.getName();
         userRepository.delete(user);
 
-
         String answer = userName+"이 삭제되었습니다.";
         return answer;
     }
