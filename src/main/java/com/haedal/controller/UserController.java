@@ -5,6 +5,7 @@ import com.haedal.entity.User;
 import com.haedal.entity.UserDto;
 import com.haedal.repository.UserRepository;
 import com.haedal.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @RestController // 추후 변경 예정
 public class UserController {
@@ -30,8 +32,8 @@ public class UserController {
 
     //사용자 생성 요청
     @PostMapping("/user")
-    public UserDto create(UserDto userdto){
-        User user = UserDto.toEntity(userdto);
+    public UserDto create(@RequestBody UserDto userDto){
+        User user = UserDto.toEntity(userDto);
         User pullUser  = userService.sign(user);
 
         return UserDto.from(pullUser);
@@ -62,7 +64,7 @@ public class UserController {
     }
 
     @PatchMapping("/user/{id}")
-    public UserDto modify(@PathVariable(value = "id")long id, User user){
+    public UserDto modify(@PathVariable(value = "id")long id, @RequestBody User user){
         User changedUser = userService.modifyOne(id,user);
 
         return UserDto.from(changedUser);

@@ -34,7 +34,7 @@ public class PassController {
         return passService.getAll();
     }
     @PatchMapping("/{passId}")
-    public PassDto modifyPass(@PathVariable Long passId, PassDto passDto) throws Exception {
+    public PassDto modifyPass(@PathVariable Long passId, @RequestBody PassDto passDto) throws Exception {
         return PassDto.from(passService.updatePass(passId, passDto));
     }
     @DeleteMapping("/{passId}")
