@@ -31,18 +31,20 @@ public class UserServiceTest {
     @Test
     void SignTest(){
         //given
-        User request = newUser(1L);
-        Mockito.when(userRepository.save(request))
-                .thenReturn(request);
+        User user = newUser(1L);				// UserId가 1인 user를 생성
+        Mockito.when(userRepository.save(user))  // userService에서 userRepository.save(user)를 사용할때
+                .thenReturn(user);   		// request를 return 해라.
 
-        //when
-        User result = userService.sign(request);
+        //when  userService.sign 메서드를 실행하고 반환값을 저장.userService.sign()은 저장된 user를 반환하도록 했음.
+        User result = userService.sign(user);
 
-        //then
+
+        //then 반환된 값이 예상하는 반환값과 동일한지 확인
         assertThat(result)
-                .isEqualTo(request);
+                .isEqualTo(user);
 
-        Mockito.verify(userRepository).save(request);
+        Mockito.verify(userRepository).save(user);   // 해당 함수가 실행되었는지 확인
+
     }
 
 
@@ -92,7 +94,7 @@ public class UserServiceTest {
         Mockito.when(userRepository.findById(1L)).thenReturn(Optional.of(user));
 
         //when
-        User result = userService.modifyOne(1L,user);
+        User result = userService.modifyOne(1L,changedUser);
 
         //then
         assertThat(result)

@@ -5,6 +5,7 @@ package com.haedal.controller;
 import com.google.gson.Gson;
 import com.haedal.entity.User;
 import com.haedal.entity.UserDto;
+import com.haedal.repository.UserRepository;
 import com.haedal.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureTestEnti
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -34,12 +36,22 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
+
 @ExtendWith(MockitoExtension.class)
+@WebMvcTest(UserController.class)
 public class UserControllerTest {
 
+    @MockBean
+    private UserService userService;
+    @MockBean
+    private UserRepository userRepository;
+    @Autowired
+    private MockMvc mockMvc;
+
+
+    /*
     @InjectMocks
     private UserController userController;
-
     @Mock
     private UserService userService;
 
@@ -50,10 +62,11 @@ public class UserControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
     }
 
+     */
+
 
     @DisplayName("회원 가입 성공")
     @Test // 생성
-
     public void userCreateTest() throws Exception {
         //UserDto를 받으면 UserDto를 반환한다.
         //userService.sign(user)의 경우에는 유저를 반환한다.
@@ -148,11 +161,7 @@ public class UserControllerTest {
 
     private UserDto newUserDto(Long id){
 
-        UserDto userDto = UserDto.builder()
-                .userId(id)
-                .name("홍길동")
-                .phone("01012345678")
-                .build();
+        UserDto userDto = new UserDto(id,"홍길동","01012345678");
 
         return userDto;
     }
