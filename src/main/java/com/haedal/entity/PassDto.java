@@ -28,6 +28,12 @@ public class PassDto {
     LocalDateTime endedDay;
 
     public PassDto(Long id, String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
+        this.id = id;
+        this.name =name;
+        this.count = count;
+        this.price = price;
+        this.startedDay = startedDay;
+        this.endedDay = endedDay;
     }
 
     public static PassDto of(Long id, String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
@@ -56,5 +62,4 @@ public class PassDto {
                 .endedDay(endedDay)
                 .build();
     }
-
 }
