@@ -19,4 +19,4 @@
 - [git Projects/issues (개발과정)](https://github.com/orgs/haedal-health/projects/1)
 
 # CI/CD
-with git action (예정)
+with git action
