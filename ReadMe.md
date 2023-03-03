@@ -12,11 +12,11 @@
 # Documentation
 
 ---
-- [ ] 요구사항 명세서
+- [요구사항 명세서](https://docs.google.com/document/d/1XZ-5B4j2FXvKVGqwsgy9KIXJSFTISMVmNlki3SZ5YxA/edit?usp=sharing)
 - [ERD Model](https://user-images.githubusercontent.com/63745627/218080931-ae5e74e2-b7c5-46c5-a784-bf712feaa91b.png)
 - User Guide
 - API Docs with Swagger3.0
 - [git Projects/issues (개발과정)](https://github.com/orgs/haedal-health/projects/1)
 
 # CI/CD
-with git action (예정)
+with git action
