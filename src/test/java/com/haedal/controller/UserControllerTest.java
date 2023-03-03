@@ -2,6 +2,7 @@
 package com.haedal.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.haedal.entity.User;
 import com.haedal.entity.UserDto;
@@ -47,6 +48,12 @@ public class UserControllerTest {
     private UserRepository userRepository;
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    public UserControllerTest(@Autowired MockMvc mockMvc) throws Exception {
+        this.mockMvc = mockMvc;
+    }
 
 
     /*
@@ -128,17 +135,24 @@ public class UserControllerTest {
     @Test
     public void userModifyTest() throws Exception {
 
+        User user = newUser(1L);
+        User user1 = user;
+        user1.setName("김철수");
+        user1.setPhone("01011112222");
         //given
-        Mockito.when(userService.modifyOne(eq(1L),any(User.class))).thenReturn(newUser(2L));
+        Mockito.when(userService.modifyOne(eq(1L),any(User.class))).thenReturn(user1);
 
         //when
         mockMvc.perform(
                         MockMvcRequestBuilders.patch("/user/1")
                                 .contentType(MediaType.APPLICATION_JSON)
-                ) //then
-                .andExpect(jsonPath("userId").value(2L))
-                .andExpect(jsonPath("name").value("홍길동"))
-                .andExpect(jsonPath("phone").value("01012345678"));
+                                .content(objectMapper.writeValueAsString(user1))
+                )
+
+                .andExpect(jsonPath("userId").value(1L))
+                .andExpect(jsonPath("name").value("김철수"))
+                .andExpect(jsonPath("phone").value("01011112222"));
+
 
     }
 

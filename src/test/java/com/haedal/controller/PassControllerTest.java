@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
 
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -20,6 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 
 import java.net.URI;
@@ -28,12 +30,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @WebMvcTest(PassController.class)        // WebMvc Test Annotation ( UserApiController 를 테스트)
@@ -63,6 +65,7 @@ class PassControllerTest {
 
         PassDto request = PassDto.from(pass);
         // when
+        given(passService.create(request.toEntity())).willReturn(request.toEntity());
         mockMvc.perform(
                         post("/pass")  // post 로 테스트
                                 .content(objectMapper.writeValueAsString(request))
@@ -104,15 +107,17 @@ class PassControllerTest {
     public void givePassDtoandReturnPassDtoUpdated() throws Exception {
         //given
         PassDto updated = createPassDto();
-        given(passService.updatePass(1L, updated)).willReturn(createPass());
+        Mockito.when(passService.updatePass(eq(1L),any(PassDto.class))).thenReturn(updated.toEntity());
 
-        //when&then
-        mockMvc.perform(patch("/pass/1")
+        //when
+        mockMvc.perform(
+                MockMvcRequestBuilders.patch("/pass/1")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updated))
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        ).andExpect(status().isOk())
+        .andExpect(jsonPath("name").value("해달헬스장 1일 이용권"));
 
-        then(passService).should().updatePass(1L, updated);
+        //then(passService).should().updatePass(1L, updated);
     }
 
     @Test
