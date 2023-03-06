@@ -15,4 +15,4 @@ spring:
       org.hibernate.SQL: debug
       hibernate.type.descriptor.sql.BasicBinder: trace
   server:
-    port: 8080
+    port: 3000
