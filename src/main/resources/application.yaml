@@ -4,9 +4,9 @@ spring:
     hibernate:
       ddl-auto: create-drop
   datasource:
-    url: jdbc:mysql://localhost:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
+    url: ${JDBC_DATABASE_URL}
     username: root
-    password: dbswodyd91
+    password: H807MPuFy4BvXWGA
     driver-class-name: com.mysql.cj.jdbc.Driver
   logging:
     level:
