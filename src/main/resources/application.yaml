@@ -14,3 +14,5 @@ spring:
       com.zaxxer.hikari.HikariConfig: debug
       org.hibernate.SQL: debug
       hibernate.type.descriptor.sql.BasicBinder: trace
+  server:
+    port: 8080
