@@ -6,9 +6,9 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: mysql://haedal-health-user:sqSMwrhV0cP3@srv-captain--bvpkftcsuw-mysql-80x:3306/haedal-health-database
-    username: root
-    password: AzdwImys5huJZWn7
+    url: jdbc:mysql://srv-captain--bvpkftcsuw
+    username: haedal-health-user
+    password: sqSMwrhV0cP3
     driver-class-name: com.mysql.cj.jdbc.Driver
   logging:
     level:
