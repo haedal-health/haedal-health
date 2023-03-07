@@ -4,7 +4,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: haedal-health-user
@@ -16,3 +16,4 @@ spring:
       com.zaxxer.hikari.HikariConfig: debug
       org.hibernate.SQL: debug
       hibernate.type.descriptor.sql.BasicBinder: trace
+
