@@ -1,12 +1,12 @@
 server:
-  port: ${port:3000}
+  port: ${port:8080}
 spring:
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
   datasource:
-    url: ${JDBC_DATABASE_URL}
+    url: mysql://haedal-health-user:sqSMwrhV0cP3@srv-captain--bvpkftcsuw-mysql-80x:3306/haedal-health-database
     username: haedal-health-user
     password: sqSMwrhV0cP3
     driver-class-name: com.mysql.cj.jdbc.Driver
