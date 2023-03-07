@@ -6,7 +6,7 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: jdbc:mysql://srv-captain--bvpkftcsuw/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
+    url: jdbc:mysql://srv-captain--bvpkftcsuw:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
     username: haedal-health-user
     password: sqSMwrhV0cP3
     driver-class-name: com.mysql.cj.jdbc.Driver
