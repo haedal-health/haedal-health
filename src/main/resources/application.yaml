@@ -8,7 +8,7 @@ spring:
   datasource:
     url: ${JDBC_DATABASE_URL}
     username: haedal-health-user
-    password: uaLTtGj7xp31
+    password: sqSMwrhV0cP3
     driver-class-name: com.mysql.cj.jdbc.Driver
   logging:
     level:
