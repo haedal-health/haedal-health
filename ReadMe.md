@@ -6,7 +6,7 @@
 # Latest Realeses
 
 ---
-2023.03.07 headal-health 1.0 realeses 예정
+- [v.1.0](https://github.com/haedal-health/haedal-health/releases/tag/v1.0)
 - [ ] 배포된 사이트 
 
 # Documentation
