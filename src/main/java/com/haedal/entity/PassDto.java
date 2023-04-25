@@ -1,40 +1,18 @@
 package com.haedal.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 
-@Getter
-@NoArgsConstructor
-public class PassDto {
-
-    Long id;
-
-    String name;
-
-    Integer count;
-
-    Integer price;
-
-    LocalDateTime startedDay;
-
-    LocalDateTime endedDay;
-
-    public PassDto(Long id, String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
-        this.id = id;
-        this.name =name;
-        this.count = count;
-        this.price = price;
-        this.startedDay = startedDay;
-        this.endedDay = endedDay;
-    }
+public record PassDto(
+        Long id,
+        String name,
+        Integer count,
+        Integer price,
+        LocalDateTime startedDay,
+        LocalDateTime endedDay
+) {
 
     public static PassDto of(Long id, String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
         return new PassDto(id, name, count, price, startedDay, endedDay);

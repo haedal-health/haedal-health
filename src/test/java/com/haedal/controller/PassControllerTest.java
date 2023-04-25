@@ -126,7 +126,7 @@ class PassControllerTest {
         //given
         PassDto deleted = createPassDto();
 
-        given(passService.deletePass(1L)).willReturn(deleted.getName()+"이 삭제되었습니다.");
+        given(passService.deletePass(1L)).willReturn(deleted.name()+"이 삭제되었습니다.");
 
         //when&then
         mockMvc.perform(delete("/pass/1"))

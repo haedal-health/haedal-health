@@ -6,23 +6,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@NoArgsConstructor
-public class UserDto {
-    public Long userId;
-    public String name;
-    public String phone;
-    public UserDto(Long userId,String name,String phone){
-        this.userId = userId;
-        this.name =name;
-        this.phone = phone;
+public record UserDto (
+        Long userId,
+        String name,
+        String phone
+){
 
+    public static UserDto of(Long userId,String name,String phone){
+        return new UserDto(userId, name, phone);
     }
     public static UserDto from(User user) {
-        return new UserDto(user.getUserId(),user.getName(),user.getPhone());
+        return new UserDto(
+                user.getUserId(),
+                user.getName(),
+                user.getPhone()
+        );
     }
-    public static User toEntity(UserDto userDto){
-        return new User(userDto.getUserId(),userDto.getName(),userDto.getPhone());
+    public User toEntity(UserDto userDto){
+        return User.builder()
+                .userId(userId)
+                .name(name)
+                .phone(phone).build();
     }
 
 }
