@@ -80,7 +80,7 @@ public class UserControllerTest {
         //given
         UserDto userDto = newUserDto(1L); //post요청으로 받아올 값
 
-        Mockito.when(userService.sign(any(User.class))).thenReturn(UserDto.toEntity(userDto));
+        Mockito.when(userService.sign(any(User.class))).thenReturn(userDto.toEntity(userDto));
 
         //when
         mockMvc.perform(

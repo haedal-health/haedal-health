@@ -33,7 +33,7 @@ public class UserController {
     //사용자 생성 요청
     @PostMapping("/user")
     public UserDto create(@RequestBody UserDto userDto){
-        User user = UserDto.toEntity(userDto);
+        User user = userDto.toEntity(userDto);
         User pullUser  = userService.sign(user);
 
         return UserDto.from(pullUser);

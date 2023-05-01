@@ -59,12 +59,12 @@ public class PassService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
 
-        pass.setName(passDto.getName());
-        pass.setPrice(passDto.getPrice());
-        pass.setCount(passDto.getCount());
-        pass.setStartedDay(passDto.getStartedDay());
-        pass.setEndedDay(passDto.getEndedDay());
-
+        pass.setName(passDto.name());
+        pass.setPrice(passDto.price());
+        pass.setCount(passDto.count());
+        pass.setStartedDay(passDto.startedDay());
+        pass.setEndedDay(passDto.endedDay());
+        passRepository.flush();
         return pass;
     }
 

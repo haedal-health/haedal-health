@@ -84,7 +84,7 @@ class PassServiceTest {
         List<PassDto> passDtos = passService.getAll();
         //then
         for(PassDto p : passDtos){
-            System.out.println("테스트 + " + p.getId());
+            System.out.println("테스트 + " + p.id());
         }
         assertThat(passDtos)
                 .hasSize(10)
