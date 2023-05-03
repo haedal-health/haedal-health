@@ -6,18 +6,19 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/")
 public class HelloController {
 
     @Autowired
     private PassRepository passRepository;
 
-    @GetMapping("")
-    public void hello() {
+    @GetMapping("/hello")
+    public ModelAndView hello(ModelAndView model) {
         Pass pass = new Pass();
         pass.setName("해달헬스장 1일 이용권");
         pass.setPrice(9000);
@@ -26,10 +27,10 @@ public class HelloController {
         pass.setEndedDay(LocalDateTime.now());
 
         Pass savedPass = passRepository.save(pass);
-        Pass findPass = passRepository.findById(1L).orElse(null);
 
-        System.out.println(pass == findPass);
+        model.addObject("hello", "Test화면입니다.");
+        model.setViewName("hello");
 
-        //== 을 객체에 사용하면 assertSame처럼 주소를 비교하게 된다.
+        return model;
     }
 }

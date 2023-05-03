@@ -1,19 +1,16 @@
-server:
-  port: ${port:3000}
 spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
   datasource:
-    url: jdbc:mysql://database-1.crftsf86kid6.us-east-1.rds.amazonaws.com:3306/haedal?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: admin
-    password: dbswodyd91
+    url: jdbc:mysql://localhost:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
+    username: root
+    password: ysun1030
     driver-class-name: com.mysql.cj.jdbc.Driver
-  logging:
-    level:
-      root: info
-      com.zaxxer.hikari.HikariConfig: debug
-      org.hibernate.SQL: debug
-      hibernate.type.descriptor.sql.BasicBinder: trace
-
+logging:
+  level:
+    root: info
+    com.zaxxer.hikari.HikariConfig: debug
+    org.hibernate.SQL: debug
+    hibernate.type.descriptor.sql.BasicBinder: trace
