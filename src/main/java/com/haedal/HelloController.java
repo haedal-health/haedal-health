@@ -1,6 +1,7 @@
 package com.haedal;
 
 import com.haedal.entity.Pass;
+import com.haedal.entity.User;
 import com.haedal.repository.PassRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("")
 public class HelloController {
 
     @Autowired
@@ -30,6 +32,22 @@ public class HelloController {
 
         model.addObject("hello", "Test화면입니다.");
         model.setViewName("hello");
+
+        return model;
+    }
+    @GetMapping("/main")
+    public ModelAndView login(ModelAndView model){
+
+        model.addObject("login", "로그인이 필요합니다.");
+        model.setViewName("main/login");
+        return model;
+    }
+    @GetMapping("/login")
+    public ModelAndView loginPost(ModelAndView model){
+        //kakao Controller호출//
+
+        model.addObject("login", "카카오 로그인 페이지로 들어갑니다.");
+        //model.setViewName("login/success");
 
         return model;
     }

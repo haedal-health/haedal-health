@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<div layout:fragment="content">
+    <p th:text="${login}"></p>
+    <form action='login_page.php'>
+        <div class="col">
+            <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=84a0d1a6f2c8aad492cec0f443b0ecf6&redirect_uri=http://localhost:8080/kakao&response_type=code">로그인</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>
