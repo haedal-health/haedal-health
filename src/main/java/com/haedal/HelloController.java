@@ -1,23 +1,26 @@
 package com.haedal;
 
 import com.haedal.entity.Pass;
+import com.haedal.entity.User;
 import com.haedal.repository.PassRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("")
 public class HelloController {
 
     @Autowired
     private PassRepository passRepository;
 
-    @GetMapping("")
-    public void hello() {
+    @GetMapping("/hello")
+    public ModelAndView hello(ModelAndView model) {
         Pass pass = new Pass();
         pass.setName("해달헬스장 1일 이용권");
         pass.setPrice(9000);
@@ -26,10 +29,26 @@ public class HelloController {
         pass.setEndedDay(LocalDateTime.now());
 
         Pass savedPass = passRepository.save(pass);
-        Pass findPass = passRepository.findById(1L).orElse(null);
 
-        System.out.println(pass == findPass);
+        model.addObject("hello", "Test화면입니다.");
+        model.setViewName("hello");
 
-        //== 을 객체에 사용하면 assertSame처럼 주소를 비교하게 된다.
+        return model;
+    }
+    @GetMapping("/main")
+    public ModelAndView login(ModelAndView model){
+
+        model.addObject("login", "로그인이 필요합니다.");
+        model.setViewName("main/login");
+        return model;
+    }
+    @GetMapping("/login")
+    public ModelAndView loginPost(ModelAndView model){
+        //kakao Controller호출//
+
+        model.addObject("login", "카카오 로그인 페이지로 들어갑니다.");
+        //model.setViewName("login/success");
+
+        return model;
     }
 }
