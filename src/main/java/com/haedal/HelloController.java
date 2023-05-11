@@ -42,6 +42,7 @@ public class HelloController {
         model.setViewName("main/login");
         return model;
     }
+
     @GetMapping("/login")
     public ModelAndView loginPost(ModelAndView model){
         //kakao Controller호출//
