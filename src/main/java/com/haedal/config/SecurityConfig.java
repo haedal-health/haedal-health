@@ -4,12 +4,17 @@ package com.haedal.config;
 import com.haedal.service.OAuth2Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.stereotype.Controller;
+
 
 @EnableWebSecurity
 @RequiredArgsConstructor
+@Configuration
 public class SecurityConfig {
 
     private final OAuth2Service oAuth2Service;
@@ -22,7 +27,7 @@ public class SecurityConfig {
 
                 .authorizeRequests() // 사용자가 보내는 요청에 인증 절차 수행 필요
                 .antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행 생략 가능
-                .antMatchers("/logintest").permitAll()
+
                 .anyRequest().authenticated() // 나머지 요청들은 모두 인증 절차 수행해야함
 
                 .and()
@@ -33,4 +38,9 @@ public class SecurityConfig {
                 .and()
                 .and().build();
     }
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().antMatchers("/images/**", "/js/**", "/webjars/**","/css/**");
+    }
+
 }
