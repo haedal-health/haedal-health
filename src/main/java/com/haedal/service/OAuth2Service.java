@@ -25,6 +25,7 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+
         ObjectMapper objectMapper = new ObjectMapper();
         OAuth2UserService oAuth2UserService = new DefaultOAuth2UserService();
         // new DefaultOAuth2UserService는 Ouath2UserService의 구현체이다.
