@@ -2,7 +2,9 @@ package com.haedal.entity;
 
 import java.util.Map;
 
+
 public enum OAuthAttributes {
+/*
     
     KAKAO("kakao", (attribute) -> {
 
@@ -31,4 +33,7 @@ public enum OAuthAttributes {
                 .orElseThrow(IllegalArgumentException::new)
                 .of.apply(attributes);
     }
+
+ */
 }
+
