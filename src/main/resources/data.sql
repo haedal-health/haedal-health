@@ -1,3 +1,4 @@
+drop table pass;
 create table pass (
       pass_id INT,
       name VARCHAR(50),
