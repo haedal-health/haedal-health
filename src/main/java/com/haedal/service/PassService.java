@@ -22,6 +22,8 @@ public class PassService {
     private final PassRepository passRepository;
 
     public Pass create(Pass pass) {
+        //TOdo : role 검사
+        //Todo : 시간 설정 자동화? (Config)
         pass.setStartedDay(
                 LocalDateTime.of(
                         pass.getStartedDay().getYear(),
@@ -42,11 +44,14 @@ public class PassService {
     }
 
     public Pass getPass(Long passId) {
+        //TOdo : role 검사
+
         return passRepository.findById(passId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
     }
 
     public List<PassDto> getAll() {
+        //TOdo : role 검사
         //TODO : pageable 추가 -> map(PassDto::from)
         return passRepository.findAll().stream()
                 .map(PassDto::from)
@@ -55,6 +60,8 @@ public class PassService {
 
     @Transactional
     public Pass updatePass(Long passId, PassDto passDto) throws Exception {
+        //TOdo : role 검사
+
         Pass pass = passRepository.findById(passId)
                 .orElseThrow(() ->
                         new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
@@ -67,8 +74,13 @@ public class PassService {
         passRepository.flush();
         return pass;
     }
+    //Todo: Pass에 이용자 등록하기
+    //로그인한 유저가 관리자인가? 검사가 필요
+    // 만약 이미 이용중이면 -> 에러 반환
+    // 이용하지 않고 있을때만 추가가능
 
     public String deletePass(Long passId){
+        //TOdo : role 검사
         Pass pass = passRepository.findById(passId)
                 .orElseThrow(() ->
                         new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));

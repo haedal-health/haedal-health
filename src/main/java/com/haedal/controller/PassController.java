@@ -17,11 +17,13 @@ public class PassController {
 
     private final PassService passService;
 
+    //Todo : @ResquestBody PassRequest passRequest
     @PostMapping("")
     public PassDto createPass(@RequestBody PassDto passDto){
         Pass pass = passDto.toEntity();
         Pass savedPass = passService.create(pass);
         PassDto result = PassDto.from(savedPass);
+        //Todo : return PassRespose result
         return result;
     }
     @GetMapping("/{passId}")
