@@ -1,12 +1,11 @@
 package com.haedal.service;
 
-import com.haedal.entity.User;
+import com.haedal.model.entity.User;
 import com.haedal.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional

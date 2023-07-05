@@ -1,11 +1,13 @@
 package com.haedal.controller;
 
 
-import com.haedal.entity.Pass;
-import com.haedal.entity.PassDto;
+import com.haedal.controller.request.PassCreateRequest;
+import com.haedal.model.entity.Pass;
+import com.haedal.model.PassDto;
+import com.haedal.model.entity.User;
 import com.haedal.service.PassService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,9 +21,9 @@ public class PassController {
 
     //Todo : @ResquestBody PassRequest passRequest
     @PostMapping("")
-    public PassDto createPass(@RequestBody PassDto passDto){
-        Pass pass = passDto.toEntity();
-        Pass savedPass = passService.create(pass);
+    public PassDto createPass(@RequestBody PassCreateRequest request, User user) throws AuthenticationException {
+        PassDto pass = PassDto.of(request.getName(), request.getCount(), request.getPrice(), request.getStartedDay(), request.getEndedDay());
+        Pass savedPass = passService.create(pass, user);
         PassDto result = PassDto.from(savedPass);
         //Todo : return PassRespose result
         return result;

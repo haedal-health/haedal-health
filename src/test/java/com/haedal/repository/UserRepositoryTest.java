@@ -1,13 +1,8 @@
 package com.haedal.repository;
 
-import com.haedal.entity.User;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest  // 각각의 모듈만 테스트 할 수 있도록 도움을 준다.
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)

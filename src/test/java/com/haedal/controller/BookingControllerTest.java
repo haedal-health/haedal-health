@@ -2,7 +2,7 @@ package com.haedal.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haedal.config.ObjectMapperConfig;
-import com.haedal.entity.Booking;
+import com.haedal.model.entity.Booking;
 import com.haedal.service.BookingService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;

@@ -1,6 +1,6 @@
 package com.haedal.service;
 
-import com.haedal.entity.User;
+import com.haedal.model.entity.User;
 import com.haedal.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

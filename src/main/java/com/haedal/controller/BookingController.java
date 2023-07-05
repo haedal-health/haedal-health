@@ -1,6 +1,6 @@
 package com.haedal.controller;
 
-import com.haedal.entity.Booking;
+import com.haedal.model.entity.Booking;
 import com.haedal.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

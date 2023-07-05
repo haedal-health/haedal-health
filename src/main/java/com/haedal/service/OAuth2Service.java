@@ -1,7 +1,7 @@
 package com.haedal.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.haedal.entity.UserDto;
+import com.haedal.model.UserDto;
 import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -42,9 +41,9 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
         Map<String, Object> attributes = oAuth2User.getAttributes(); // 사용자가 가지고 있는 정보
         Map<String,String> mapUser = objectMapper.convertValue(attributes.get("kakao_account"),Map.class);
 
-        UserDto userDto = UserDto.of(null, mapUser.get("email"),null);
+        UserDto userDto = UserDto.of(null, mapUser.get("role"), mapUser.get("email"), null);
 
-        if(!userRepository.findByName(userDto.name()).isPresent()){
+        if(!userRepository.findByName(userDto.getName()).isPresent()){
             userRepository.save(userDto.toEntity(userDto));
         }
 
