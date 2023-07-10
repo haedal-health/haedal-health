@@ -1,12 +1,11 @@
 package com.haedal.service;
 
-import com.haedal.entity.Booking;
+import com.haedal.model.entity.Booking;
 import com.haedal.repository.BookingRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

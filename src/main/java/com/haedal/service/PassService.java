@@ -1,18 +1,19 @@
 package com.haedal.service;
 
-import com.haedal.entity.Pass;
-import com.haedal.entity.PassDto;
-import com.haedal.entity.User;
+import com.haedal.model.UserRole;
+import com.haedal.model.entity.Pass;
+import com.haedal.model.PassDto;
+import com.haedal.model.entity.User;
 import com.haedal.repository.PassRepository;
+import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,31 +21,28 @@ import java.util.stream.Collectors;
 public class PassService {
 
     private final PassRepository passRepository;
+    private final UserRepository userRepository;
 
-    public Pass create(Pass pass) {
+    public Pass create(PassDto pass) throws AuthenticationException {
         //TOdo : role 검사
-        //Todo : 시간 설정 자동화? (Config)
-        pass.setStartedDay(
-                LocalDateTime.of(
-                        pass.getStartedDay().getYear(),
-                        pass.getStartedDay().getMonth(),
-                        pass.getStartedDay().getDayOfMonth(),
-                        0,0,0)
-        );
-        pass.setEndedDay(
-                LocalDateTime.of(
-                        pass.getEndedDay().getYear(),
-                        pass.getEndedDay().getMonth(),
-                        pass.getEndedDay().getDayOfMonth(),
-                        0,0,0).plusDays(1)
-        );
-
-        Pass saved = passRepository.save(pass);
+        //TODO : token 검사로 user name 추출하기
+//        User user = userRepository.findByName();
+        
+//        if(!user.getRole().equals(UserRole.ADMIN)) {
+//            throw new AuthenticationException("권한이 없습니다");
+//        }
+        Pass saved = passRepository.save(pass.toEntity());
         return saved;
     }
 
     public Pass getPass(Long passId) {
         //TOdo : role 검사
+        // USER -> 자기 Pass만, ADMIN-> 모든 PASS 조회 가능
+        // User user = userRepository.findByName();
+
+//        if(!user.getRole().equals(UserRole.ADMIN)) {
+//            throw new AuthenticationException("권한이 없습니다");
+//        }
 
         return passRepository.findById(passId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
@@ -53,6 +51,11 @@ public class PassService {
     public List<PassDto> getAll() {
         //TOdo : role 검사
         //TODO : pageable 추가 -> map(PassDto::from)
+        //User user = userRepository.findByName();
+
+//        if(!user.getRole().equals(UserRole.ADMIN)) {
+//            throw new AuthenticationException("권한이 없습니다");
+//        }
         return passRepository.findAll().stream()
                 .map(PassDto::from)
                 .collect(Collectors.toList());
@@ -66,11 +69,11 @@ public class PassService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
 
-        pass.setName(passDto.name());
-        pass.setPrice(passDto.price());
-        pass.setCount(passDto.count());
-        pass.setStartedDay(passDto.startedDay());
-        pass.setEndedDay(passDto.endedDay());
+        pass.setName(passDto.getName());
+        pass.setPrice(passDto.getPrice());
+        pass.setCount(passDto.getCount());
+        pass.setStartedDay(passDto.getStartedDay());
+        pass.setEndedDay(passDto.getEndedDay());
         passRepository.flush();
         return pass;
     }

@@ -1,12 +1,12 @@
 package com.haedal.service;
 
-import com.haedal.entity.User;
+import com.haedal.model.entity.Pass;
+import com.haedal.model.entity.User;
 import com.haedal.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -55,11 +55,12 @@ public class UserService {
         return originUser;
     }
     public String deleteOne(Long id) {
-       User user = userRepository.findById(id).orElse(null);
+        User user = userRepository.findById(id).orElse(null);
         String userName = user.getName();
         userRepository.delete(user);
 
         String answer = userName+"이 삭제되었습니다.";
         return answer;
     }
+
 }

@@ -1,10 +1,7 @@
 package com.haedal.service;
 
-import com.haedal.entity.Booking;
-import com.haedal.entity.Pass;
-import com.haedal.entity.PassDto;
+import com.haedal.model.entity.Booking;
 import com.haedal.repository.BookingRepository;
-import org.aspectj.apache.bcel.classfile.LocalVariable;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,4 +1,4 @@
-package com.haedal.entity;
+package com.haedal.model.entity;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

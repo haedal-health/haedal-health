@@ -1,4 +1,4 @@
-package com.haedal.entity;
+package com.haedal.model;
 
 import java.util.Map;
 
