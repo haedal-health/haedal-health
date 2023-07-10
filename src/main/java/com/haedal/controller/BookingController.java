@@ -17,10 +17,10 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("")
-    public Booking userRegist(@RequestBody PassDto pass, UserDto user){
+    public List<Booking> userRegist(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId){
         //Todo : pass의 count수만큼 임시 예약 생성
 
-        Booking saved = new Booking();// bookingService.create(pass, user);
+        List<Booking> saved = bookingService.registBooking(passId, userId);// bookingService.create(pass, user);
         return saved;
     }
     @GetMapping("/{bookingId}")
@@ -36,8 +36,14 @@ public class BookingController {
     public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody  Booking booking) {
         return bookingService.updateBooking(bookingId, booking);
     }
-    @DeleteMapping("/{bookingId}")
+    @PostMapping("/{bookingId}")
     public String resetBooking(@PathVariable Long bookingId) {
-        return bookingService.deleteBooking(bookingId);
+
+        return bookingService.resetBooking(bookingId);
+    }
+
+    @DeleteMapping("/{bookingId}")
+    public String deleteBooking(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId) {
+        return bookingService.deleteBooking(passId, userId);
     }
 }
