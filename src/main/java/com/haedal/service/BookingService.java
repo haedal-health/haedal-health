@@ -1,11 +1,17 @@
 package com.haedal.service;
 
 import com.haedal.model.entity.Booking;
+import com.haedal.model.entity.Pass;
 import com.haedal.repository.BookingRepository;
+import com.haedal.repository.PassRepository;
+import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.lang.reflect.Array;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,10 +19,28 @@ import java.util.List;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
+    private final PassRepository passRepository;
 
+    //TODO : delete create()
     public Booking create(Booking booking) {
         Booking saved = bookingRepository.save(booking);
         return saved;
+    }
+
+    public List<Booking> registBooking(Long passId, Long userId) {
+        //TODO : User가 실제 있는 유저인지
+        //TODO : Pass가 실제 있는 이용권인지
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Pass pass = passRepository.findById(passId).orElseThrow(()->
+                new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
+
+        for(int i=0; i<pass.getCount(); i++){
+            Booking saved = bookingRepository.save(new Booking(userId, passId));
+            bookings.add(saved);
+        }
+        return bookings.stream().toList();
+
     }
     public Booking getBooking(Long bookingId) {
         return bookingRepository.findById(bookingId)
@@ -50,4 +74,6 @@ public class BookingService {
         String answer = deleted.getBookingId() + "이 삭제되었습니다.";
         return answer;
     }
+
+
 }

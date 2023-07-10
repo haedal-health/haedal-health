@@ -31,7 +31,8 @@ public class PassService {
 //        if(!user.getRole().equals(UserRole.ADMIN)) {
 //            throw new AuthenticationException("권한이 없습니다");
 //        }
-        Pass saved = passRepository.save(pass.toEntity());
+        Pass saved = passRepository.save(pass.toEntity(pass.getName(),pass.getCount(),pass.getPrice(),pass.getStartedDay(),pass.getEndedDay()));
+
         return saved;
     }
 

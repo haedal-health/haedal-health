@@ -168,13 +168,13 @@ class BookingControllerTest {
     private List<Booking> createBookingList() {
         List<Booking> bookings = new ArrayList<>();
         for(int i=1; i<11; i++) {
-            Booking booking = new Booking();
-            booking.setBookingId(Integer.toUnsignedLong(i));
-            booking.setStartTime(LocalDateTime.now().minusHours(1));
-            booking.setEndedTime(LocalDateTime.now());
-            booking.setUserId(1L);
-            booking.setPassId(1L);
-            bookings.add(booking);
+//            Booking booking = new Booking();
+//            booking.setBookingId(Integer.toUnsignedLong(i));
+//            booking.setStartTime(LocalDateTime.now().minusHours(1));
+//            booking.setEndedTime(LocalDateTime.now());
+//            booking.setUserId(1L);
+//            booking.setPassId(1L);
+//            bookings.add(booking);
         }
         return bookings;
     }

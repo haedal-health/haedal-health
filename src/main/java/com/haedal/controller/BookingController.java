@@ -1,5 +1,6 @@
 package com.haedal.controller;
 
+import com.haedal.controller.request.BookingRegisterRequest;
 import com.haedal.model.PassDto;
 import com.haedal.model.UserDto;
 import com.haedal.model.entity.Booking;
@@ -17,10 +18,10 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("")
-    public List<Booking> userRegist(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId){
+    public List<Booking> userRegist(@RequestBody BookingRegisterRequest request){
         //Todo : pass의 count수만큼 임시 예약 생성
 
-        List<Booking> saved = bookingService.registBooking(passId, userId);// bookingService.create(pass, user);
+        List<Booking> saved = bookingService.registBooking(request.getPassId(), request.getUserId());// bookingService.create(pass, user);
         return saved;
     }
     @GetMapping("/{bookingId}")
@@ -39,11 +40,11 @@ public class BookingController {
     @PostMapping("/{bookingId}")
     public String resetBooking(@PathVariable Long bookingId) {
 
-        return bookingService.resetBooking(bookingId);
+        return "";//bookingService.resetBooking(bookingId);
     }
 
     @DeleteMapping("/{bookingId}")
     public String deleteBooking(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId) {
-        return bookingService.deleteBooking(passId, userId);
+        return "";//bookingService.deleteBooking(passId, userId);
     }
 }

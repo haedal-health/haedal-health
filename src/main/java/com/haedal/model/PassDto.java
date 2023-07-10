@@ -21,6 +21,11 @@ public class PassDto{
         LocalDateTime endedDay;
 
     public PassDto(String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
+        this.name = name;
+        this.count = count;
+        this.price = price;
+        this.startedDay = startedDay;
+        this.endedDay = endedDay;
     }
 
     public static PassDto of(String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
@@ -39,7 +44,17 @@ public class PassDto{
     }
 
 
-    public Pass toEntity() {
+//    public Pass toEntity() {
+//        return Pass.builder()
+//                .name(name)
+//                .count(count)
+//                .price(price)
+//                .startedDay(startedDay)
+//                .endedDay(endedDay)
+//                .build();
+//    }
+
+    public Pass toEntity(String name, Integer count, Integer price, LocalDateTime startedDay, LocalDateTime endedDay) {
         return Pass.builder()
                 .name(name)
                 .count(count)

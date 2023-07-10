@@ -21,12 +21,12 @@ public class PassController {
 
     //Todo : @ResquestBody PassRequest passRequest
     @PostMapping("")
-    public PassDto createPass(@RequestBody PassCreateRequest request) throws AuthenticationException {
+    public Pass createPass(@RequestBody PassCreateRequest request) throws AuthenticationException {
         PassDto pass = PassDto.of(request.getName(), request.getCount(), request.getPrice(), request.getStartedDay(), request.getEndedDay());
         Pass savedPass = passService.create(pass);
-        PassDto result = PassDto.from(savedPass);
+        //PassDto result = PassDto.from(savedPass);
         //Todo : return PassRespose result
-        return result;
+        return savedPass;
     }
     @GetMapping("/{passId}")
     public PassDto detailPass(@PathVariable Long passId){
