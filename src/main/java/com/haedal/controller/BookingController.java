@@ -19,7 +19,6 @@ public class BookingController {
 
     @PostMapping("")
     public List<Booking> userRegist(@RequestBody BookingRegisterRequest request){
-        //Todo : pass의 count수만큼 임시 예약 생성
 
         List<Booking> saved = bookingService.registBooking(request.getPassId(), request.getUserId());// bookingService.create(pass, user);
         return saved;
@@ -37,12 +36,14 @@ public class BookingController {
     public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody  Booking booking) {
         return bookingService.updateBooking(bookingId, booking);
     }
+    //TODO
     @PostMapping("/{bookingId}")
     public String resetBooking(@PathVariable Long bookingId) {
 
         return "";//bookingService.resetBooking(bookingId);
     }
 
+    //TODO : delete ALL
     @DeleteMapping("/{bookingId}")
     public String deleteBooking(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId) {
         return "";//bookingService.deleteBooking(passId, userId);
