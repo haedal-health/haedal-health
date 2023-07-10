@@ -21,9 +21,9 @@ public class PassController {
 
     //Todo : @ResquestBody PassRequest passRequest
     @PostMapping("")
-    public PassDto createPass(@RequestBody PassCreateRequest request, User user) throws AuthenticationException {
+    public PassDto createPass(@RequestBody PassCreateRequest request) throws AuthenticationException {
         PassDto pass = PassDto.of(request.getName(), request.getCount(), request.getPrice(), request.getStartedDay(), request.getEndedDay());
-        Pass savedPass = passService.create(pass, user);
+        Pass savedPass = passService.create(pass);
         PassDto result = PassDto.from(savedPass);
         //Todo : return PassRespose result
         return result;

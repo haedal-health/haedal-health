@@ -5,6 +5,7 @@ import com.haedal.model.entity.Pass;
 import com.haedal.model.PassDto;
 import com.haedal.model.entity.User;
 import com.haedal.repository.PassRepository;
+import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.stereotype.Service;
@@ -20,19 +21,28 @@ import java.util.stream.Collectors;
 public class PassService {
 
     private final PassRepository passRepository;
+    private final UserRepository userRepository;
 
-    public Pass create(PassDto pass, User user) throws AuthenticationException {
+    public Pass create(PassDto pass) throws AuthenticationException {
         //TOdo : role 검사
-        if(!user.getRole().equals(UserRole.ADMIN)) {
-            //TODO : message Enum 화
-            throw new AuthenticationException("권한이 없습니다");
-        }
+        //TODO : token 검사로 user name 추출하기
+//        User user = userRepository.findByName();
+        
+//        if(!user.getRole().equals(UserRole.ADMIN)) {
+//            throw new AuthenticationException("권한이 없습니다");
+//        }
         Pass saved = passRepository.save(pass.toEntity());
         return saved;
     }
 
     public Pass getPass(Long passId) {
         //TOdo : role 검사
+        // USER -> 자기 Pass만, ADMIN-> 모든 PASS 조회 가능
+        // User user = userRepository.findByName();
+
+//        if(!user.getRole().equals(UserRole.ADMIN)) {
+//            throw new AuthenticationException("권한이 없습니다");
+//        }
 
         return passRepository.findById(passId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
@@ -41,6 +51,11 @@ public class PassService {
     public List<PassDto> getAll() {
         //TOdo : role 검사
         //TODO : pageable 추가 -> map(PassDto::from)
+        //User user = userRepository.findByName();
+
+//        if(!user.getRole().equals(UserRole.ADMIN)) {
+//            throw new AuthenticationException("권한이 없습니다");
+//        }
         return passRepository.findAll().stream()
                 .map(PassDto::from)
                 .collect(Collectors.toList());
