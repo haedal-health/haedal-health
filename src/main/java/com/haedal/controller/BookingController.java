@@ -38,10 +38,10 @@ public class BookingController {
         return bookingService.updateBooking(bookingId, request.getStartTime(), request.getEndedTime(), request.getTeacher());
     }
     //TODO
-    @PostMapping("/{bookingId}")
-    public String resetBooking(@PathVariable Long bookingId) {
+    @PatchMapping("")
+    public List<Booking> resetBooking(@RequestBody BookingRegisterRequest request) {
 
-        return "";//bookingService.resetBooking(bookingId);
+        return bookingService.resetBooking(request.getPassId(), request.getUserId());
     }
 
     //TODO : delete ALL

@@ -68,6 +68,15 @@ public class BookingService {
         updated.setTeacher(teacher);
         return updated;
     }
+    public List<Booking> resetBooking(Long passId, Long userId) {
+        List<Booking> bookings = bookingRepository.findAllByPassIdAndUserId(passId, userId);
+        for(Booking booking : bookings){
+            booking.setStartTime(null);
+            booking.setEndedTime(null);
+            booking.setTeacher("");
+        }
+        return bookings;
+    }
 
     public String deleteBooking(Long bookingId) {
         Booking deleted = bookingRepository.findById(bookingId)
@@ -77,6 +86,7 @@ public class BookingService {
         String answer = deleted.getBookingId() + "이 삭제되었습니다.";
         return answer;
     }
+
 
 
 }
