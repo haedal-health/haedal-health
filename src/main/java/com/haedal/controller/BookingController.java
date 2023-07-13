@@ -1,6 +1,7 @@
 package com.haedal.controller;
 
 import com.haedal.controller.request.BookingRegisterRequest;
+import com.haedal.controller.request.BookingUpdateRequest;
 import com.haedal.model.PassDto;
 import com.haedal.model.UserDto;
 import com.haedal.model.entity.Booking;
@@ -33,8 +34,8 @@ public class BookingController {
         return bookingService.getAllbyPassAndUser(passId, userId);
     }
     @PatchMapping("/{bookingId}")
-    public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody  Booking booking) {
-        return bookingService.updateBooking(bookingId, booking);
+    public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody BookingUpdateRequest request) {
+        return bookingService.updateBooking(bookingId, request.getStartTime(), request.getEndedTime(), request.getTeacher());
     }
     //TODO
     @PostMapping("/{bookingId}")

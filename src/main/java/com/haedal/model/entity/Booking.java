@@ -28,10 +28,13 @@ public class Booking {
 //    @JoinColumn(name = "passId", insertable = false, updatable = false)
     private Long passId;
 
+    String teacher;
+
     public Booking(Long userId, Long passId) {
         this.userId = userId;
         this.passId = passId;
         this.startTime = null;
         this.endedTime = null;
+        this.teacher = null;
     }
 }
