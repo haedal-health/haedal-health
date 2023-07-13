@@ -24,12 +24,6 @@ public class BookingService {
     private final UserRepository userRepository;
     private final PassRepository passRepository;
 
-    //TODO : delete create()
-    public Booking create(Booking booking) {
-        Booking saved = bookingRepository.save(booking);
-        return saved;
-    }
-
     public List<Booking> registBooking(Long passId, Long userId) {
         //TODO : //User(Pass)NotFound Error 만들기
         ArrayList<Booking> bookings = new ArrayList<>();
@@ -78,13 +72,15 @@ public class BookingService {
         return bookings;
     }
 
-    public String deleteBooking(Long bookingId) {
-        Booking deleted = bookingRepository.findById(bookingId)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("존재하지 않는 Booking입니다 - bookingId: " + bookingId));
-        bookingRepository.delete(deleted);
-        String answer = deleted.getBookingId() + "이 삭제되었습니다.";
-        return answer;
+    public String deleteBooking(Long passId, Long userId) {
+        List<Booking> bookings = bookingRepository.findAllByPassIdAndUserId(passId, userId);
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<bookings.size(); i++) {
+            bookingRepository.delete(bookings.get(i));
+            sb.append(bookings.get(i).getBookingId()+", ");
+        }
+        sb.append(" 가 삭제되었습니다");
+        return sb.toString();
     }
 
 

@@ -1,6 +1,8 @@
 package com.haedal.controller;
 
+import com.haedal.controller.request.BookingDeleteRequest;
 import com.haedal.controller.request.BookingRegisterRequest;
+import com.haedal.controller.request.BookingResetRequest;
 import com.haedal.controller.request.BookingUpdateRequest;
 import com.haedal.model.PassDto;
 import com.haedal.model.UserDto;
@@ -39,14 +41,14 @@ public class BookingController {
     }
     //TODO
     @PatchMapping("")
-    public List<Booking> resetBooking(@RequestBody BookingRegisterRequest request) {
+    public List<Booking> resetBooking(@RequestBody BookingResetRequest request) {
 
         return bookingService.resetBooking(request.getPassId(), request.getUserId());
     }
 
     //TODO : delete ALL
     @DeleteMapping("/{bookingId}")
-    public String deleteBooking(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId) {
-        return "";//bookingService.deleteBooking(passId, userId);
+    public String deleteBooking(@RequestBody BookingDeleteRequest request) {
+        return bookingService.deleteBooking(request.getPassId(), request.getUserId());
     }
 }
