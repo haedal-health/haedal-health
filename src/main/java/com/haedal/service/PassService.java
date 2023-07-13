@@ -26,12 +26,13 @@ public class PassService {
     public Pass create(PassDto pass) throws AuthenticationException {
         //TOdo : role 검사
         //TODO : token 검사로 user name 추출하기
-//        User user = userRepository.findByName();
+//        User user = userRepository.findByName( -> TODO get Name() from token );
         
 //        if(!user.getRole().equals(UserRole.ADMIN)) {
 //            throw new AuthenticationException("권한이 없습니다");
 //        }
-        Pass saved = passRepository.save(pass.toEntity());
+        Pass saved = passRepository.save(pass.toEntity(pass.getName(),pass.getCount(),pass.getPrice(),pass.getStartedDay(),pass.getEndedDay()));
+
         return saved;
     }
 

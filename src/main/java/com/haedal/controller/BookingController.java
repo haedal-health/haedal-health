@@ -1,5 +1,9 @@
 package com.haedal.controller;
 
+import com.haedal.controller.request.BookingDeleteRequest;
+import com.haedal.controller.request.BookingRegisterRequest;
+import com.haedal.controller.request.BookingResetRequest;
+import com.haedal.controller.request.BookingUpdateRequest;
 import com.haedal.model.PassDto;
 import com.haedal.model.UserDto;
 import com.haedal.model.entity.Booking;
@@ -17,10 +21,9 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("")
-    public Booking userRegist(@RequestBody PassDto pass, UserDto user){
-        //Todo : pass의 count수만큼 임시 예약 생성
+    public List<Booking> userRegist(@RequestBody BookingRegisterRequest request){
 
-        Booking saved = new Booking();// bookingService.create(pass, user);
+        List<Booking> saved = bookingService.registBooking(request.getPassId(), request.getUserId());// bookingService.create(pass, user);
         return saved;
     }
     @GetMapping("/{bookingId}")
@@ -33,11 +36,19 @@ public class BookingController {
         return bookingService.getAllbyPassAndUser(passId, userId);
     }
     @PatchMapping("/{bookingId}")
-    public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody  Booking booking) {
-        return bookingService.updateBooking(bookingId, booking);
+    public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody BookingUpdateRequest request) {
+        return bookingService.updateBooking(bookingId, request.getStartTime(), request.getEndedTime(), request.getTeacher());
     }
+    //TODO
+    @PatchMapping("")
+    public List<Booking> resetBooking(@RequestBody BookingResetRequest request) {
+
+        return bookingService.resetBooking(request.getPassId(), request.getUserId());
+    }
+
+    //TODO : delete ALL
     @DeleteMapping("/{bookingId}")
-    public String resetBooking(@PathVariable Long bookingId) {
-        return bookingService.deleteBooking(bookingId);
+    public String deleteBooking(@RequestBody BookingDeleteRequest request) {
+        return bookingService.deleteBooking(request.getPassId(), request.getUserId());
     }
 }

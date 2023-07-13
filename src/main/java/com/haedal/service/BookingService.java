@@ -1,11 +1,19 @@
 package com.haedal.service;
 
 import com.haedal.model.entity.Booking;
+import com.haedal.model.entity.Pass;
+import com.haedal.model.entity.User;
 import com.haedal.repository.BookingRepository;
+import com.haedal.repository.PassRepository;
+import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.lang.reflect.Array;
+import java.time.LocalDateTime;
+import java.util.AbstractList;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,10 +21,22 @@ import java.util.List;
 public class BookingService {
 
     private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
+    private final PassRepository passRepository;
 
-    public Booking create(Booking booking) {
-        Booking saved = bookingRepository.save(booking);
-        return saved;
+    public List<Booking> registBooking(Long passId, Long userId) {
+        //TODO : //User(Pass)NotFound Error 만들기
+        ArrayList<Booking> bookings = new ArrayList<>();
+        Pass pass = passRepository.findById(passId).orElseThrow(()->
+                new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
+        User user = userRepository.findById(userId).orElseThrow(()->
+                new EntityNotFoundException("존재하지 않는 User입니다 - userId: " + userId));
+        for(int i=0; i<pass.getCount(); i++){
+            Booking saved = bookingRepository.save(new Booking(userId, passId));
+            bookings.add(saved);
+        }
+        return bookings.stream().toList();
+
     }
     public Booking getBooking(Long bookingId) {
         return bookingRepository.findById(bookingId)
@@ -33,21 +53,36 @@ public class BookingService {
         }
     }
 
-    public Booking updateBooking(Long bookingId, Booking booking) {
+    public Booking updateBooking(Long bookingId, LocalDateTime started, LocalDateTime ended, String teacher) {
         Booking updated = bookingRepository.findById(bookingId)
                 .orElseThrow(() ->
                         new EntityNotFoundException("존재하지 않는 Booking입니다 - bookingId: " + bookingId));
-        updated.setStartTime(booking.getStartTime());
-        updated.setEndedTime(booking.getEndedTime());
+        updated.setStartTime(started);
+        updated.setEndedTime(ended);
+        updated.setTeacher(teacher);
         return updated;
     }
-
-    public String deleteBooking(Long bookingId) {
-        Booking deleted = bookingRepository.findById(bookingId)
-                .orElseThrow(() ->
-                        new EntityNotFoundException("존재하지 않는 Booking입니다 - bookingId: " + bookingId));
-        bookingRepository.delete(deleted);
-        String answer = deleted.getBookingId() + "이 삭제되었습니다.";
-        return answer;
+    public List<Booking> resetBooking(Long passId, Long userId) {
+        List<Booking> bookings = bookingRepository.findAllByPassIdAndUserId(passId, userId);
+        for(Booking booking : bookings){
+            booking.setStartTime(null);
+            booking.setEndedTime(null);
+            booking.setTeacher("");
+        }
+        return bookings;
     }
+
+    public String deleteBooking(Long passId, Long userId) {
+        List<Booking> bookings = bookingRepository.findAllByPassIdAndUserId(passId, userId);
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<bookings.size(); i++) {
+            bookingRepository.delete(bookings.get(i));
+            sb.append(bookings.get(i).getBookingId()+", ");
+        }
+        sb.append(" 가 삭제되었습니다");
+        return sb.toString();
+    }
+
+
+
 }
