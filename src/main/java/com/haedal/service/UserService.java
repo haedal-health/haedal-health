@@ -52,6 +52,7 @@ public class UserService {
 
         originUser.setName(user.getName());
         originUser.setPhone(user.getPhone());
+        originUser.setRole(user.getRole());
         return originUser;
     }
     public String deleteOne(Long id) {
