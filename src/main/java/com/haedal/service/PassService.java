@@ -8,63 +8,70 @@ import com.haedal.repository.PassRepository;
 import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class PassService {
-
     private final PassRepository passRepository;
     private final UserRepository userRepository;
+    private final TokenParsingService tokenParsingService;
+    public Pass create(PassDto pass, Authentication authentication) throws AuthenticationException {
 
-    public Pass create(PassDto pass) throws AuthenticationException {
-        //TOdo : role 검사
-        //TODO : token 검사로 user name 추출하기
-//        User user = userRepository.findByName( -> TODO get Name() from token );
-        
-//        if(!user.getRole().equals(UserRole.ADMIN)) {
-//            throw new AuthenticationException("권한이 없습니다");
-//        }
-        Pass saved = passRepository.save(pass.toEntity(pass.getName(),pass.getCount(),pass.getPrice(),pass.getStartedDay(),pass.getEndedDay()));
+        User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
 
+
+        if(!user.getRole().equals(UserRole.ADMIN)) {
+            throw new AuthenticationException("권한이 없습니다");
+        }
+
+        Pass saved = passRepository.save(
+                pass.toEntity(pass.getName(),pass.getCount(),pass.getPrice(),pass.getStartedDay(),pass.getEndedDay()));
         return saved;
     }
 
-    public Pass getPass(Long passId) {
-        //TOdo : role 검사
-        // USER -> 자기 Pass만, ADMIN-> 모든 PASS 조회 가능
-        // User user = userRepository.findByName();
+    public Pass getPass(Long passId, Authentication authentication) throws AuthenticationException {
 
-//        if(!user.getRole().equals(UserRole.ADMIN)) {
-//            throw new AuthenticationException("권한이 없습니다");
-//        }
+        User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
+
+        if(!user.getRole().equals(UserRole.ADMIN)) {
+            throw new AuthenticationException("권한이 없습니다");
+        }
 
         return passRepository.findById(passId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
     }
 
-    public List<PassDto> getAll() {
-        //TOdo : role 검사
-        //TODO : pageable 추가 -> map(PassDto::from)
-        //User user = userRepository.findByName();
+    public List<PassDto> getAll(Authentication authentication)throws AuthenticationException {
 
-//        if(!user.getRole().equals(UserRole.ADMIN)) {
-//            throw new AuthenticationException("권한이 없습니다");
-//        }
+        User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
+
+        if(!user.getRole().equals(UserRole.ADMIN)) {
+            throw new AuthenticationException("권한이 없습니다");
+        }
+
         return passRepository.findAll().stream()
                 .map(PassDto::from)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public Pass updatePass(Long passId, PassDto passDto) throws Exception {
-        //TOdo : role 검사
+    public Pass updatePass(Long passId, PassDto passDto, Authentication authentication) throws Exception {
+
+        User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
+
+        if(!user.getRole().equals(UserRole.ADMIN)) {
+            throw new AuthenticationException("권한이 없습니다");
+        }
 
         Pass pass = passRepository.findById(passId)
                 .orElseThrow(() ->
@@ -78,13 +85,16 @@ public class PassService {
         passRepository.flush();
         return pass;
     }
-    //Todo: Pass에 이용자 등록하기
-    //로그인한 유저가 관리자인가? 검사가 필요
-    // 만약 이미 이용중이면 -> 에러 반환
-    // 이용하지 않고 있을때만 추가가능
 
-    public String deletePass(Long passId){
-        //TOdo : role 검사
+
+    public String deletePass(Long passId, Authentication authentication)throws Exception{
+
+        User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
+
+        if(!user.getRole().equals(UserRole.ADMIN)) {
+            throw new AuthenticationException("권한이 없습니다");
+        }
+
         Pass pass = passRepository.findById(passId)
                 .orElseThrow(() ->
                         new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
