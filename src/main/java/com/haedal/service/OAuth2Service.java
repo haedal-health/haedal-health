@@ -41,7 +41,7 @@ public class OAuth2Service implements OAuth2UserService<OAuth2UserRequest, OAuth
         Map<String, Object> attributes = oAuth2User.getAttributes(); // 사용자가 가지고 있는 정보
         Map<String,String> mapUser = objectMapper.convertValue(attributes.get("kakao_account"),Map.class);
 
-        UserDto userDto = UserDto.of(null,  mapUser.get("email"),"01012345678", null);
+        UserDto userDto = UserDto.of(null,  mapUser.get("email"),"", null);
 
         if(!userRepository.findByName(userDto.getName()).isPresent()){
             userRepository.save(userDto.toEntity(userDto));
