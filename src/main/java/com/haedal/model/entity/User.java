@@ -26,8 +26,15 @@ public class User {
     @Builder.Default
     private UserRole role = UserRole.USER;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    protected LocalDateTime createdAt;
+    protected LocalDateTime updatedAt;
+
+    public User(String name, String phone, UserRole role) {
+        this.name = name;
+        this.phone = phone;
+        this.role = role;
+    }
+
     @PrePersist
     void createdAt() {
         this.createdAt = LocalDateTime.now();

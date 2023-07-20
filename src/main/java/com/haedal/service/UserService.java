@@ -27,7 +27,7 @@ public class UserService {
         return savedUser;
     }
 
-    private void checkSameNameUser(User user) {
+    public void checkSameNameUser(User user) {
         // 같은 이름이 있는 중복 회원X
         userRepository.findByName(user.getName()).ifPresent(m -> {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
