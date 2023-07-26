@@ -4,7 +4,7 @@ spring:
     hibernate:
       ddl-auto: create
   datasource:
-    url: jdbc:mysql://haedal-health-app-user:6amZwsrtq41D@srv-captain--oszatkrdyx-mysql-80x:3306/haedal-health-app-database
+    url: jdbc:mysql://haedal-health-app-user:gziUMet8Rxuo@srv-captain--skpejvwrmq-mysql-80x:3306/haedal-health-app-database
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
