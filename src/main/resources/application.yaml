@@ -5,11 +5,11 @@ spring:
     hibernate:
       ddl-auto: update
   datasource:
-    url: ${{ secret.DB_URL }}
+    url: ${DATABASE_HOST}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ${{ secret.DB_PASSWORD }}
-#  sql:
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+  #  sql:
 #    init:
 #      mode: always                      # Spring Boot >=v2.5.0
 
