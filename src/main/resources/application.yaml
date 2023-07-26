@@ -1,14 +1,13 @@
-
 spring:
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
   datasource:
-    url: mysql://haedal-health-app-user:6amZwsrtq41D@srv-captain--oszatkrdyx-mysql-80x:3306/haedal-health-app-database
+    url: $${DATABASE_HOST}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: haedal-health-app-user
-    password: 6amZwsrtq41D
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
   #  sql:
 #    init:
 #      mode: always                      # Spring Boot >=v2.5.0
