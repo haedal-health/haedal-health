@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository{
 
     Optional<User> findByName(String name);
 
@@ -16,4 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u where u.userId IN (:userIds) ")
     Optional<List<User>> findAllByUserIds(@Param("userIds") List<Long> userIds);
+
+    User save(User user);
+
+    Optional<User> findById(Long userId);
 }
