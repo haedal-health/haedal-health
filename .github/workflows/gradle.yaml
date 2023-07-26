@@ -9,9 +9,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "release-1.1" ]
+    branches: ["105-build" ]
   pull_request:
-    branches: [ "release-1.1" ]
+    branches: [ "105-build" ]
     # main branch에 push, pull_request 이벤트가 발생하는 경우 해당 jobs가 실행
 
 permissions:
