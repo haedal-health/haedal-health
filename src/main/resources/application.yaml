@@ -8,7 +8,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${DATABASE_USERNAME}
     password: ${DATABASE_PASSWORD}
-  #  sql:
+#  sql:
 #    init:
 #      mode: always                      # Spring Boot >=v2.5.0
 
