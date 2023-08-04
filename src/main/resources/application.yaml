@@ -3,14 +3,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: true
   datasource:
     url: jdbc:mysql://localhost:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
     username: root
-    password: dbswodyd91
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
       mode: always                      # Spring Boot >=v2.5.0
+
 
   logging:
     level:

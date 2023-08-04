@@ -11,6 +11,9 @@ import com.haedal.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -19,6 +22,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
+
+
+    @GetMapping("/api/hello")
+    public String test(HttpServletRequest request) {
+        Cookie[] cookie = request.getCookies();
+        for(Cookie c : cookie){
+            System.out.println(c.getDomain());
+        }
+        return "Hello, world!";
+    }
 
     @PostMapping("")
     public List<Booking> userRegist(@RequestBody BookingRegisterRequest request){

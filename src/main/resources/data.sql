@@ -1,13 +1,5 @@
-drop table pass;
-create table pass (
-      pass_id INT,
-      name VARCHAR(50),
-      count INT,
-      started_day DATE,
-      ended_day DATE,
-      price INT
-);
 
+insert into booking (booking_id, start_time, ended_time, user_id, pass_id, teacher) values (1, '2022-10-31 12:17:36', '2022-12-23 15:16:43', 1,1,'testT');
 insert into pass (pass_id, name, count, started_day, ended_day, price) values (1, 'Toughjoyfax', 1, '2022-10-31 12:17:36', '2022-12-23 15:16:43', 1);
 insert into pass (pass_id, name, count, started_day, ended_day, price) values (2, 'Tresom', 2, '2022-10-03 03:57:55', '2022-08-22 23:51:04', 2);
 insert into pass (pass_id, name, count, started_day, ended_day, price) values (3, 'Tampflex', 3, '2022-06-27 05:54:24', '2022-12-04 03:24:19', 3);
