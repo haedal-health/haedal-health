@@ -8,6 +8,8 @@ import com.haedal.repository.PassRepository;
 import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -29,7 +31,6 @@ public class PassService {
 
         User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
 
-
         if(!user.getRole().equals(UserRole.ADMIN)) {
             throw new AuthenticationException("권한이 없습니다");
         }
@@ -40,7 +41,6 @@ public class PassService {
     }
 
     public Pass getPass(Long passId, Authentication authentication) throws AuthenticationException {
-
         User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
 
         if(!user.getRole().equals(UserRole.ADMIN)) {
@@ -51,17 +51,8 @@ public class PassService {
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 Pass입니다 - passId: " + passId));
     }
 
-    public List<PassDto> getAll(Authentication authentication)throws AuthenticationException {
-
-        User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
-
-        if(!user.getRole().equals(UserRole.ADMIN)) {
-            throw new AuthenticationException("권한이 없습니다");
-        }
-
-        return passRepository.findAll().stream()
-                .map(PassDto::from)
-                .collect(Collectors.toList());
+    public Page<PassDto> getAll(Authentication authentication, Pageable pageable)throws AuthenticationException {
+        return passRepository.findAll(pageable).map(PassDto::from);
     }
 
     @Transactional
