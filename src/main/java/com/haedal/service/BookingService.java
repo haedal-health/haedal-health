@@ -7,6 +7,8 @@ import com.haedal.repository.BookingRepository;
 import com.haedal.repository.PassRepository;
 import com.haedal.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -44,12 +46,12 @@ public class BookingService {
                         new EntityNotFoundException("존재하지 않는 Booking입니다 - bookingId: " + bookingId));
     }
 
-    public List<Booking> getAllbyPassAndUser(Long passId, Long userId) {
-        if (passId == null & userId == null) return bookingRepository.findAll();
-        else if(passId==null) return bookingRepository.findAllByUserId(userId);
-        else if(userId==null) return bookingRepository.findAllByPassId(passId);
+    public Page<Booking> getAllbyPassAndUser(Long passId, Long userId,Pageable pageable) {
+        if (passId == null & userId == null) return bookingRepository.findAll(pageable);
+        else if(passId==null) return bookingRepository.findAllByUserId(userId,pageable);
+        else if(userId==null) return bookingRepository.findAllByPassId(passId,pageable);
         else {
-            return bookingRepository.findAllByPassIdAndUserId(passId, userId);
+            return bookingRepository.findAllByPassIdAndUserId(passId,userId,pageable);
         }
     }
 
