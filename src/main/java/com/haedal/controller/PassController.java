@@ -8,6 +8,10 @@ import com.haedal.model.entity.User;
 import com.haedal.service.PassService;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.websocket.AuthenticationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,8 +38,12 @@ public class PassController {
         return pass;
     }
     @GetMapping("")
-    public List<PassDto> listPass(Authentication authentication) throws AuthenticationException {
-        return passService.getAll(authentication);
+    public Page<PassDto> listPass(
+            Authentication authentication,
+            @PageableDefault (size = 4, sort = "startedDay", direction = Sort.Direction.DESC) Pageable pageable
+            ) throws AuthenticationException {
+
+        return passService.getAll(authentication,pageable);
     }
     @PatchMapping("/{passId}")
     public PassDto modifyPass(@PathVariable Long passId, @RequestBody PassDto passDto,Authentication authentication) throws Exception {
