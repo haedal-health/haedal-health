@@ -9,6 +9,10 @@ import com.haedal.model.UserDto;
 import com.haedal.model.entity.Booking;
 import com.haedal.service.BookingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -45,8 +49,12 @@ public class BookingController {
         return booking;
     }
     @GetMapping("")
-    public List<Booking> listBooking(@RequestParam(value = "pass", required = false) Long passId, @RequestParam(value = "user", required = false) Long userId){
-        return bookingService.getAllbyPassAndUser(passId, userId);
+    public Page<Booking> listBooking(
+            @RequestParam(value = "pass", required = false) Long passId,
+            @RequestParam(value = "user", required = false) Long userId,
+            @PageableDefault(size = 4, sort = "passId", direction = Sort.Direction.DESC)Pageable pageable)
+    {
+        return bookingService.getAllbyPassAndUser(passId, userId,pageable);
     }
     @PatchMapping("/{bookingId}")
     public Booking modifyBooking(@PathVariable Long bookingId, @RequestBody BookingUpdateRequest request) {
