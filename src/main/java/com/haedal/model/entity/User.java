@@ -21,6 +21,8 @@ public class User {
 
     private String name;
 
+    private String password;
+
     private String phone;
 
     @Builder.Default
@@ -29,8 +31,9 @@ public class User {
     protected LocalDateTime createdAt;
     protected LocalDateTime updatedAt;
 
-    public User(String name, String phone, UserRole role) {
+    public User(String name, String password, String phone, UserRole role) {
         this.name = name;
+        this.password = password;
         this.phone = phone;
         this.role = role;
     }
