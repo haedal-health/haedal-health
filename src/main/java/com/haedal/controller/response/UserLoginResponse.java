@@ -1,2 +1,10 @@
-package com.haedal.controller.response;public class UserLoginResponse {
+package com.haedal.controller.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public class UserLoginResponse {
+    private String token;
 }

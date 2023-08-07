@@ -26,7 +26,6 @@ public class UserService {
         User savedUser = userRepository.save(user);
         return savedUser;
     }
-
     public void checkSameNameUser(User user) {
         // 같은 이름이 있는 중복 회원X
         userRepository.findByName(user.getName()).ifPresent(m -> {
@@ -64,4 +63,6 @@ public class UserService {
         return answer;
     }
 
+    public String login(String name, String password) {
+    }
 }
