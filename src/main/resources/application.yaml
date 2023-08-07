@@ -3,14 +3,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: create
+    defer-datasource-initialization: true
   datasource:
     url: jdbc:mysql://localhost:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
     username: root
-    password: ysun1030
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
-#  sql:
-#    init:
-#      mode: always                      # Spring Boot >=v2.5.0
+  sql:
+    init:
+      mode: always                      # Spring Boot >=v2.5.0
+
 
   logging:
     level:
@@ -39,8 +41,3 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
-
-jwt:
-  secret-key: heada-health.headal_health_2023_secret_key
-  # 30 days
-  token.expired-time-ms: 25920000
