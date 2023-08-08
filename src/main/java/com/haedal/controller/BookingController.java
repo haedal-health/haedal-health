@@ -18,11 +18,17 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping(value = "/booking")
+//@CrossOrigin("http://localhost:3000")
+@RequestMapping(value = "/kakkoLogin/booking")
 @RequiredArgsConstructor
 public class BookingController {
     private final BookingService bookingService;
 
+    @RequestMapping(value="/login")
+    public String login(@RequestParam("code") String code) {
+        System.out.println("code : " + code);
+        return "index";
+    }
 
     @GetMapping("/api/hello")
     public String test(HttpServletRequest request) {
