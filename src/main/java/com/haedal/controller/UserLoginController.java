@@ -14,6 +14,7 @@ public class UserLoginController {
     @GetMapping("/kakao")
     public String kakaoLogin(){
         System.out.println("카카오로그인");
+        //return "";
         return "/main/kakaoLogin";
     }
     @GetMapping("/logintest")
