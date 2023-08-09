@@ -1,6 +1,8 @@
 package com.haedal.controller;
 
 
+import com.haedal.controller.request.UserLoginRequest;
+import com.haedal.controller.response.UserLoginResponse;
 import com.haedal.model.entity.User;
 import com.haedal.model.UserDto;
 import com.haedal.repository.UserRepository;
@@ -23,19 +25,27 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PostMapping("/login")
+    public UserLoginResponse login(@RequestBody UserLoginRequest request){
+        String token = userService.login(request.getName(), request.getPassword());
+
+        return new UserLoginResponse(token);
+    }
 
 
     //사용자 생성페이지 요청
 
     //사용자 생성 요청
-    @PostMapping("/user")
-    public UserDto create(@RequestBody UserDto userDto){
+    @PostMapping("/join")
+    public UserDto create(@RequestBody User user){
         //TODO : USER DTO-> USER Request
-        User user = userDto.toEntity(userDto);
+
         User pullUser  = userService.sign(user);
 
         return UserDto.from(pullUser);
     }
+
+
 
 
 

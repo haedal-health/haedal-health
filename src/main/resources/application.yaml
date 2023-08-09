@@ -2,8 +2,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create
-    defer-datasource-initialization: true
+      ddl-auto: create-drop
   datasource:
     url: jdbc:mysql://localhost:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
     username: root
@@ -41,3 +40,8 @@ spring:
             token-uri: https://kauth.kakao.com/oauth/token
             user-info-uri: https://kapi.kakao.com/v2/user/me
             user-name-attribute: id
+
+jwt:
+  secret-key: heada-health.headal_health_2023_secret_key
+  # 30 days
+  token.expired-time-ms: 25920000

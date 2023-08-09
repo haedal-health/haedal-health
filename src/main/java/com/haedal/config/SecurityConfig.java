@@ -29,7 +29,11 @@ public class SecurityConfig {
                 .authorizeRequests() // 사용자가 보내는 요청에 인증 절차 수행 필요
                 //.antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행
 
+                .antMatchers("/login", "/join").permitAll()
+                .antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행 생략 가능
                 .anyRequest().authenticated() // 나머지 요청들은 모두 인증 절차 수행해야함
+               //TODO : add Filter before
+                // .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
                 .and()
                 .oauth2Login() // OAuth2를 통한 로그인 사용

@@ -21,13 +21,23 @@ public class User {
 
     private String name;
 
+    private String password;
+
     private String phone;
 
     @Builder.Default
     private UserRole role = UserRole.USER;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    protected LocalDateTime createdAt;
+    protected LocalDateTime updatedAt;
+
+    public User(String name, String password, String phone, UserRole role) {
+        this.name = name;
+        this.password = password;
+        this.phone = phone;
+        this.role = role;
+    }
+
     @PrePersist
     void createdAt() {
         this.createdAt = LocalDateTime.now();
