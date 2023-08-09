@@ -9,8 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BookingRepository extends JpaRepository<Booking, Long> {
+public interface BookingRepository{
 
     //Optional<Booking> findByUserId(Long userId);
     List<Booking> findAllByUserId(Long userId);
@@ -28,4 +29,10 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     @Query("select b.userId from Booking b where b.passId=(:passId)")
     List<Long> findAllUserIdByPassId(@Param("passId") Long passId);
+
+    Booking save(Booking booking);
+
+    Optional<Booking> findById(Long bookingId);
+
+    void delete(Booking booking);
 }
