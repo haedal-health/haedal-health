@@ -2,6 +2,7 @@ package com.haedal.repository;
 
 import com.haedal.model.PassDto;
 import com.haedal.model.entity.Pass;
+import com.haedal.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PassRepository {
+public interface PassRepository extends JpaRepository<Pass, Long>{
 
     public Optional<Pass> findByName(String name);
 
