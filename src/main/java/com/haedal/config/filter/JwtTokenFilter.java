@@ -1,10 +1,8 @@
 package com.haedal.config.filter;
 
+import com.haedal.model.UserDto;
 import com.haedal.service.UserService;
 import com.haedal.util.JwtTokenUtils;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Map;
-import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -41,26 +33,39 @@ public class JwtTokenFilter extends OncePerRequestFilter{
             filterChain.doFilter(request, response); //다음 필터로 넘김
             return;
         }
+        try{
         //Token Validation
-        final String token = header.split(" ")[1].trim(); //header : Bearer+" "+token으로 구성됨
-        //token 만료 여부 확인
-        if(JwtTokenUtils.isExpired(token, key)){
-            //ture-> 만료됨
-            log.error("Error occurs bcs key is expired.");
-            filterChain.doFilter(request, response); //다음 필터로 넘김
+            final String token = header.split(" ")[1].trim(); //header : Bearer+" "+token으로 구성됨
+            //token 만료 여부 확인
+            if(JwtTokenUtils.isExpired(token, key)){
+                //ture-> 만료됨
+                log.error("Error occurs bcs key is expired.");
+                filterChain.doFilter(request, response); //다음 필터로 넘김
+                return;
+            }
+            //get Username from token(claims)
+            String userName = JwtTokenUtils.getUserName(token, key);
+            // user valid check
+            UserDto user = userService.getUserbyUserName(userName);
+            if(user==null){
+                log.error("user is not exist"); //header파싱 실패시
+                filterChain.doFilter(request, response); //다음 필터로 넘김
+                return;
+            }
+            //save Object in security context holer
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    //complete principal, credentials, authorities
+                    user, null, user.getAuthorities());
+            //enum.toString -> ADMIN(0) -> Admin 으로 변경
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            //request 정보 넣어서 보내줌.
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }catch (RuntimeException e){
+            log.error("Error occurs while validating.{}", e.toString());
+            filterChain.doFilter(request, response); //마저 필터에 추가
             return;
         }
-        //get Username from token(claims)
-        String userName = JwtTokenUtils.getUserName(token, key);
-        // user valid check
-
-
-        //save Object in security context holer
-
         //filter 넘기기
         filterChain.doFilter(request, response);
     }
-
-
-
 }

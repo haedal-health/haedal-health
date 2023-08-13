@@ -38,8 +38,8 @@ public class JwtTokenUtils {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-
     public static String getUserName(String token, String key) {
+        return extractClaims(token, key).get("userName", String.class);
     }
 }
 
