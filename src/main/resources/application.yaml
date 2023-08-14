@@ -6,12 +6,11 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/haedal?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true # ?? ??? ?? schema ? ?? ?? ??
     username: root
-    password: root
+    password: ysun1030
     driver-class-name: com.mysql.cj.jdbc.Driver
   sql:
     init:
       mode: always                      # Spring Boot >=v2.5.0
-
 
   logging:
     level:
