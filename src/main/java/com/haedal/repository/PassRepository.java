@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PassRepository {
+public interface PassRepository extends JpaRepository<Pass, Long> {
 
     public Optional<Pass> findByName(String name);
 
