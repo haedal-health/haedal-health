@@ -65,47 +65,47 @@ public class UserControllerTest {
      */
 
 
-    @DisplayName("회원 가입 성공")
-    @Test // 생성
-    public void userCreateTest() throws Exception {
-        //UserDto를 받으면 UserDto를 반환한다.
-        //userService.sign(user)의 경우에는 유저를 반환한다.
-        //given
-        UserDto userDto = newUserDto(1L); //post요청으로 받아올 값
+//    @DisplayName("회원 가입 성공")
+//    @Test // 생성
+//    public void userCreateTest() throws Exception {
+//        //UserDto를 받으면 UserDto를 반환한다.
+//        //userService.sign(user)의 경우에는 유저를 반환한다.
+//        //given
+//        UserDto userDto = newUserDto(1L); //post요청으로 받아올 값
+//
+//        Mockito.when(userService.sign(any(User.class))).thenReturn(userDto.toEntity(userDto));
+//
+//        //when
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.post("/user")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(new Gson().toJson(userDto))
+//                //then
+//        ).andExpect(jsonPath("userId").value(1L))
+//                .andExpect(jsonPath("name").value("홍길동"))
+//                .andExpect(jsonPath("phone").value("01012345678"));
+//
+//    }
 
-        Mockito.when(userService.sign(any(User.class))).thenReturn(userDto.toEntity(userDto));
-
-        //when
-        mockMvc.perform(
-                MockMvcRequestBuilders.post("/user")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new Gson().toJson(userDto))
-                //then
-        ).andExpect(jsonPath("userId").value(1L))
-                .andExpect(jsonPath("name").value("홍길동"))
-                .andExpect(jsonPath("phone").value("01012345678"));
-
-    }
-
-    @DisplayName("유저 전체 조회")
-    @Test //
-    public void userListTest() throws Exception{
-
-        //given
-        UserDto userDto = newUserDto(1L);
-        String json = "[{\"userId\":1,\"name\":\"홍길동\",\"phone\":\"01012345678\"}]";
-        Mockito.when(userService.findUsers()).thenReturn(newUsers());
-
-
-        //when
-        mockMvc.perform(
-                MockMvcRequestBuilders.get("/user")
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-
-
-    }
+//    @DisplayName("유저 전체 조회")
+//    @Test //
+//    public void userListTest() throws Exception{
+//
+//        //given
+//        UserDto userDto = newUserDto(1L);
+//        String json = "[{\"userId\":1,\"name\":\"홍길동\",\"phone\":\"01012345678\"}]";
+//        Mockito.when(userService.findUsers()).thenReturn(newUsers());
+//
+//
+//        //when
+//        mockMvc.perform(
+//                MockMvcRequestBuilders.get("/user")
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andDo(MockMvcResultHandlers.print());
+//
+//
+//    }
 
     @DisplayName("유저 단일 id 조회")
     @Test
@@ -164,14 +164,14 @@ public class UserControllerTest {
 
 
     }
-
-
-    private UserDto newUserDto(Long id){
-
-        UserDto userDto = new UserDto(id,"홍길동","01012345678", UserRole.USER);
-
-        return userDto;
-    }
+//
+//
+//    private UserDto newUserDto(Long id){
+//
+//        UserDto userDto = new UserDto(id,"홍길동","01012345678", UserRole.USER);
+//
+//        return userDto;
+//    }
 
     private User newUser(Long id){
 

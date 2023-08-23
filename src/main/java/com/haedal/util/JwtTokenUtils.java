@@ -22,23 +22,24 @@ public class JwtTokenUtils {
                 .compact();
     }
 
-    private static Key getKey(String key) {
+    public static boolean isExpired(String token, String key) {
+        Date expiredAt = extractClaims(token, key).getExpiration();
+        return expiredAt.before(new Date()); //현재에 비해 만료시간이 더 빠르면 true
+    }
+
+    public static Claims extractClaims(String token, String key) {
+        //key로 token파싱해 claim추출 후 Body 반환
+        return Jwts.parserBuilder().setSigningKey(getKey(key))
+                .build().parseClaimsJws(token).getBody();
+    }
+
+    public static Key getKey(String key) {
         byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-//    public static String getName(String token, String key){
-//        return extractClaims(token, key).get("userName", String.class);
-//    }
-//    public static boolean isExpired(String token, String key){
-//        Date expiredDate = extractClaims(token, key).getExpiration();
-//        return expiredDate.before(new Date()); //new Date : 현재 시작으로 생성됨
-//        //true면 만료시간<지금 이므로, 만료 되었다는 뜻
-//    }
-//    private static Claims extractClaims(String token, String key){
-//        return Jwts.parserBuilder().setSigningKey(getKey(key))
-//                .build().parseClaimsJws(token).getBody();
-//    }
 
-
+    public static String getUserName(String token, String key) {
+        return extractClaims(token, key).get("userName", String.class);
+    }
 }
 

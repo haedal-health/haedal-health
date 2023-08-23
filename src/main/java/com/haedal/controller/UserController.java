@@ -6,8 +6,10 @@ import com.haedal.controller.response.UserLoginResponse;
 import com.haedal.model.entity.User;
 import com.haedal.model.UserDto;
 import com.haedal.repository.UserRepository;
+import com.haedal.service.OAuth2Service;
 import com.haedal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 public class UserController {
 
     private UserService userService ;
+    private OAuth2Service oAuth2Service;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -30,6 +33,11 @@ public class UserController {
         String token = userService.login(request.getName(), request.getPassword());
 
         return new UserLoginResponse(token);
+    }
+    //KakaoLogin
+    @PostMapping(value = "/kakao")
+    public void kakaoAuthRequest() {
+      //TODO : kakaoLogin 개발
     }
 
 

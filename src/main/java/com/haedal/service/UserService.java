@@ -1,5 +1,6 @@
 package com.haedal.service;
 
+import com.haedal.model.UserDto;
 import com.haedal.model.entity.User;
 import com.haedal.repository.UserRepository;
 import com.haedal.util.JwtTokenUtils;
@@ -88,5 +89,9 @@ public class UserService {
         String token = JwtTokenUtils.generateToken(name, secretKey, expiredTimeMs);
         //토큰 반환
         return token;
+    }
+
+    public UserDto getUserbyUserName(String userName) {
+        return userRepository.findByName(userName).map(UserDto::from).orElse(null);
     }
 }

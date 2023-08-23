@@ -27,7 +27,7 @@ public class PassController {
     @PostMapping("")
     public Pass createPass(@RequestBody PassCreateRequest request, Authentication authentication) throws AuthenticationException {
         PassDto pass = PassDto.of(request.getName(), request.getCount(), request.getPrice(), request.getStartedDay(), request.getEndedDay());
-        Pass savedPass = passService.create(pass,authentication);
+        Pass savedPass = passService.createJwt(pass,authentication);
         //PassDto result = PassDto.from(savedPass);
         //Todo : return PassRespose result
         return savedPass;
