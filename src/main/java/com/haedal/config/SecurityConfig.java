@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Controller;
@@ -33,11 +34,13 @@ public class SecurityConfig {
                 .cors().and()
                 .formLogin().disable()
                 .authorizeRequests() // 사용자가 보내는 요청에 인증 절차 수행 필요
-                .antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행
-                .antMatchers("/login", "/join").permitAll()
-                .antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행 생략 가능
-                .anyRequest().authenticated() // 나머지 요청들은 모두 인증 절차 수행해야함
+                    .antMatchers("/login", "/join").permitAll()
+                    .antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행 생략 가능
+                    .antMatchers("/**").authenticated() // 나머지 요청들은 모두 인증 절차 수행해야함
                //TODO : add Filter before
+                    .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용하는 경우 사용
                 .and()
                 .addFilterBefore(new JwtTokenFilter(key, userService), UsernamePasswordAuthenticationFilter.class)
                 .oauth2Login() // OAuth2를 통한 로그인 사용

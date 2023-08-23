@@ -52,10 +52,6 @@ public class UserDto implements UserDetails {
         return List.of(new SimpleGrantedAuthority(this.getRole().toString()));
     }
 
-    @Override
-    public String getPassword() {
-        return this.password;
-    }
 
     @Override
     public String getUsername() {

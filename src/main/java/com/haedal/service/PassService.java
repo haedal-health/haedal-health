@@ -39,6 +39,18 @@ public class PassService {
                 pass.toEntity(pass.getName(),pass.getCount(),pass.getPrice(),pass.getStartedDay(),pass.getEndedDay()));
         return saved;
     }
+    public Pass createJwt(PassDto pass, Authentication authentication) throws AuthenticationException {
+
+        User user = userRepository.findByName(authentication.getName()).orElseThrow();
+
+        if(!user.getRole().equals(UserRole.ADMIN)) {
+            throw new AuthenticationException("권한이 없습니다");
+        }
+
+        Pass saved = passRepository.save(
+                pass.toEntity(pass.getName(),pass.getCount(),pass.getPrice(),pass.getStartedDay(),pass.getEndedDay()));
+        return saved;
+    }
 
     public Pass getPass(Long passId, Authentication authentication) throws AuthenticationException {
         User user = userRepository.findByName(tokenParsingService.getEmail(authentication)).orElseThrow();
