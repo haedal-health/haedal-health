@@ -32,7 +32,7 @@ public class SecurityConfig {
 
                 .logout().disable() // 로그아웃 사용 X
                 .cors().and()
-                .formLogin().disable()
+                //.formLogin().disable()
                 .authorizeRequests() // 사용자가 보내는 요청에 인증 절차 수행 필요
                     .antMatchers("/login", "/join").permitAll()
                     .antMatchers("/kakao").permitAll() // 해당 URL은 인증 절차 수행 생략 가능
@@ -43,12 +43,12 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // jwt 사용하는 경우 사용
                 .and()
                 .addFilterBefore(new JwtTokenFilter(key, userService), UsernamePasswordAuthenticationFilter.class)
-                .oauth2Login() // OAuth2를 통한 로그인 사용
-                .defaultSuccessUrl("http://localhost:3000/kakkoLogin/", true) // 로그인 성공시 이동할 URL
-                .userInfoEndpoint() // 사용자가 로그인에 성공하였을 경우,
-                .userService(oAuth2Service) // 해당 서비스 로직을 타도록 설정
-                .and()
-                .and()
+                //.oauth2Login() // OAuth2를 통한 로그인 사용
+                //.defaultSuccessUrl("http://localhost:3000/kakkoLogin/", true) // 로그인 성공시 이동할 URL
+                //.userInfoEndpoint() // 사용자가 로그인에 성공하였을 경우,
+                //.userService(oAuth2Service) // 해당 서비스 로직을 타도록 설정
+                //.and()
+                //.and()
                 .build();
     }
    @Bean
